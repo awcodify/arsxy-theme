@@ -46,6 +46,26 @@ homepage:
     button_url: "/articles/"
 ```
 
+## Customizing the Logo
+
+You can easily replace the site title text with an image logo by configuring the logo settings in `_config.yml`:
+
+```yaml
+# Logo settings for the site header
+header_logo:
+  enabled: true # Set to true to use logo image instead of text title
+  image: "/assets/images/your-logo.png" # Path to your logo image
+  alt: "Your Site Logo" # Alt text for logo
+  height: 60 # Logo height in pixels
+
+# Logo URL for the Jekyll SEO Tag plugin (for social sharing and SEO)
+logo: "/assets/images/your-logo.png"
+```
+
+For best results, use a logo with transparent background (PNG format) and ensure it's properly sized. The recommended height is 50-70px, but you can adjust this based on your design needs.
+
+> **Note**: The `logo` setting is used for SEO metadata and social sharing previews, while the `header_logo` object controls the visual appearance in your site header. Make sure both point to the same image for consistency.
+
 ## Customizing the Favicon
 
 You can easily customize your site's favicon by configuring the appropriate settings in `_config.yml`:

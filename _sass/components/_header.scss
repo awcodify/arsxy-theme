@@ -29,11 +29,25 @@
     color: $text-color;
     position: relative;
     padding: $spacing-xs $spacing-sm;
+    display: flex;
+    align-items: center;
     background: linear-gradient(to right, $primary-color, $accent-color);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     color: transparent;
+    
+    .site-logo {
+      max-height: 60px;
+      width: auto;
+      vertical-align: middle;
+      transition: $transition-base;
+      -webkit-text-fill-color: initial;
+      
+      &:hover {
+        opacity: 0.85;
+      }
+    }
     
     &::before {
       content: '';

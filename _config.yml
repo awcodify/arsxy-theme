@@ -9,6 +9,16 @@ description: >-
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://awcodify.github.io/arsxy-theme" # GitHub Pages URL (replace with your actual site URL)
 
+# Logo settings for the site header
+header_logo:
+  enabled: false # Set to true to use logo image instead of text title
+  image: "/assets/images/logo.png" # Path to your logo image
+  alt: "Arsxy Theme Logo" # Alt text for logo
+  height: 60 # Logo height in pixels
+
+# Logo URL for the Jekyll SEO Tag plugin
+logo: "/assets/images/logo.png"
+
 # GitHub Pages settings
 repository: awcodify/arsxy-theme
 github: [metadata]
