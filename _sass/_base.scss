@@ -29,11 +29,15 @@
   --secondary-color: #{$secondary-color};
   // --accent-color: #{$accent-color};
   --text-color: #{$text-color};
-  // --background-color: #{$background-color};
-  // --background-color-alt: #{$light-gray};
-  // --border-color: #{$border-color};
+  --bg-color: #{$background-color};
+  --background-color-alt: #{$light-gray};
+  --border-color: #{$border-color};
   --link-color: #{$link-color};
   --link-hover-color: #{$link-hover-color};
+  --text-muted: #{$dark-gray};
+  
+  /* Overlay colors */
+  --overlay-bg: rgba(0, 0, 0, 0.8); /* Semi-transparent black for light mode */
   
   /* Taxonomy filter specific vars */
   --tag-bg: #f0f0f0;
@@ -52,11 +56,15 @@ html.dark-mode {
   --secondary-color: #{lighten($secondary-color, 15%)};
   // --accent-color: #{lighten($accent-color, 15%)};
   --text-color: #{$dark-text-color};
-  // --background-color: #{$dark-background};
-  // --background-color-alt: #{$dark-surface};
-  // --border-color: #{$dark-border-color};
+  --bg-color: #{$dark-background};
+  --background-color-alt: #{$dark-surface};
+  --border-color: #{$dark-border-color};
   --link-color: #{lighten($link-color, 15%)};
   --link-hover-color: #{lighten($link-hover-color, 15%)};
+  --text-muted: #{$dark-gray-light};
+  
+  /* Overlay colors */
+  --overlay-bg: rgba(0, 0, 0, 0.9); /* Slightly darker for dark mode */
   
   /* Category filter specific dark mode vars */
   --tag-bg: #{rgba($dark-surface, 0.6)};

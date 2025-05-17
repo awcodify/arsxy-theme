@@ -39,7 +39,7 @@
   left: 0;
   width: 100%;
   height: 100vh; /* Use viewport height units */
-  background-color: rgba(0, 0, 0, 0.9); /* Changed from 0.85 to 0.9 for 90% opacity */
+  background-color: var(--overlay-bg, rgba(0, 0, 0, 0.8)); /* Using CSS variable with fallback */
   display: flex;
   align-items: center; /* Center vertically */
   justify-content: center; /* Center horizontally */
@@ -63,6 +63,7 @@
     min-height: 200px; /* Set minimum height to reduce layout shifts */
     height: auto;
     background-color: var(--bg-color);
+    color: var(--text-color); /* Explicitly set text color */
     border-radius: 8px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     margin: 0; /* Remove any margin that might affect centering */
@@ -81,11 +82,12 @@
     align-items: center;
     justify-content: space-between;
     padding: 1rem 1.5rem;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color, #edf2f7);
     
     h2 {
       margin: 0;
       font-size: 1.5rem;
+      color: var(--text-color, #2c3e50); /* Explicit text color */
     }
     
     .close-search {
@@ -119,10 +121,10 @@
       width: 100%;
       padding: 0.75rem 1rem;
       font-size: 1.1rem;
-      border: 1px solid var(--border-color);
+      border: 1px solid var(--border-color, #edf2f7);
       border-radius: 4px;
-      background-color: var(--bg-color);
-      color: var(--text-color);
+      background-color: var(--bg-color, #ffffff);
+      color: var(--text-color, #2c3e50);
       margin-bottom: 1.5rem;
       
       &:focus {
@@ -136,11 +138,11 @@
       margin-top: 1.5rem;
       text-align: center;
       padding-top: 1rem;
-      border-top: 1px solid var(--border-color);
+      border-top: 1px solid var(--border-color, #edf2f7);
       
       a {
         display: inline-block;
-        color: var(--primary-color);
+        color: var(--primary-color, #3273dc);
         font-size: 0.9rem;
         text-decoration: none;
         transition: color 0.2s ease;
@@ -223,14 +225,14 @@
 .search-results-container {
   .search-message {
     padding: 1rem;
-    color: var(--text-muted);
+    color: var(--text-muted, #8c9bab);
     text-align: center;
     font-style: italic;
   }
   
   .search-result {
     margin-bottom: 1.5rem;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color, #edf2f7);
     padding-bottom: 1.5rem;
     
     &:last-child {
@@ -239,12 +241,12 @@
     
     .search-result-link {
       display: block;
-      color: var(--text-color);
+      color: var(--text-color, #2c3e50);
       text-decoration: none;
       
       &:hover {
         .search-result-title {
-          color: var(--primary-color);
+          color: var(--primary-color, #3273dc);
         }
       }
     }
