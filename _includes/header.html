@@ -2,7 +2,12 @@
   <div class="wrapper">
     <a class="site-title" rel="author" href="{{ "/" | relative_url }}">
       {% if site.header_logo.enabled %}
-        <img src="{{ site.header_logo.image | relative_url }}" alt="{{ site.header_logo.alt | default: site.title }}" class="site-logo" height="{{ site.header_logo.height | default: 60 }}" />
+        <div class="site-logo-wrapper">
+          <img src="{{ site.header_logo.image | relative_url }}" 
+               alt="{{ site.header_logo.alt | default: site.title }}" 
+               class="site-logo {% if site.header_logo.dark_mode_class %}{{ site.header_logo.dark_mode_class }}{% else %}outline-in-dark-mode{% endif %}" 
+               height="{{ site.header_logo.height | default: 60 }}" />
+        </div>
       {% else %}
         {{ site.title | escape }}
       {% endif %}
