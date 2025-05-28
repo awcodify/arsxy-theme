@@ -22,6 +22,7 @@ Welcome to the official documentation for Arsxy Theme, a clean, modern Jekyll th
 
 ## Components
 
+* [Logo Configuration](./logo-configuration/)
 * [Navigation](./components/navigation/)
 * [Table of Contents](./components/toc/)
 * [Code Highlighting](./components/code-highlighting/)

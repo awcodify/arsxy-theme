@@ -26,32 +26,7 @@ The theme can automatically switch to dark mode if the user's operating system o
 
 One common challenge with dark mode is ensuring your site logo remains visible when the background changes. This is especially important for dark or black logos that may become difficult to see against a dark background.
 
-The theme provides several options to handle logos in dark mode through the `dark_mode_class` setting in your `_config.yml`:
-
-```yaml
-header_logo:
-  enabled: true
-  image: "/assets/images/logo.png"
-  alt: "Your Site Logo"
-  height: 60
-  dark_mode_class: "invert-in-dark-mode" # Options explained below
-```
-
-### Available Dark Mode Logo Classes
-
-1. **`dark-parts-to-white-dark-mode`**: Primarily affects black and dark colors in your logo while minimizing changes to other colors. This is the best option for targeting mainly black elements.
-
-2. **`all-to-white-dark-mode`**: Converts all colored parts of your logo to white, preserving only transparency. Perfect for logos that should appear as a white silhouette in dark mode.
-
-3. **`selective-lighten-dark-mode`**: Selectively lightens darker colors while better preserving lighter colors. Best for logos with a mix of dark and light elements.
-
-4. **`invert-in-dark-mode`**: Inverts all colors of your logo. This works best for simple black and white logos without transparency.
-
-5. **`outline-in-dark-mode`**: Adds a white outline/glow effect around your logo without changing its colors.
-
-6. **`brighten-in-dark-mode`**: Increases the brightness of your logo without inverting it. Good for colored logos.
-
-For more detailed information and examples, see the [Logo Dark Mode Configuration](/docs/logo-dark-mode/) page.
+The theme provides options to handle logos in dark mode through the `dark_mode_class` setting in your `_config.yml`. For detailed information about logo configuration including dark mode support, see the [Logo Configuration](/docs/logo-configuration/) page.
 
 ## Customizing Dark Mode Colors
 
