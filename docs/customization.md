@@ -35,6 +35,7 @@ features:
 navigation:
   - title: Home
     url: /
+    icon: home  # Optional: adds colorful icon to nav item
   # Add more items as needed
 
 # Homepage sections
@@ -45,6 +46,24 @@ homepage:
     button_text: "Explore"
     button_url: "/articles/"
 ```
+
+## Social Media & Icons
+
+The Arsxy theme includes colorful icons for social media and navigation links. You can configure social links in your `_config.yml`:
+
+```yaml
+# Social media links
+social:
+  github: yourusername
+  twitter: yourusername
+  linkedin: yourusername
+  email: your@email.com
+
+# RSS feed
+rss_enabled: true
+```
+
+These icons will appear in both the footer and contact page with modern, colorful designs.
 
 ## Customizing the Logo
 

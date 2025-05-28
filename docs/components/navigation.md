@@ -39,16 +39,23 @@ navigation:
 
 ### Navigation Icons
 
-The Arsxy Theme supports icons in the navigation menu. To add an icon to a menu item, include the `icon` property with a valid icon name. The theme uses [Feather Icons](https://feathericons.com/) for its icon system. Here are the available icon options:
+The Arsxy Theme supports colorful icons in the navigation menu. To add an icon to a menu item, include the `icon` property with a valid icon name. The theme uses modernized, colorful versions of [Feather Icons](https://feathericons.com/) for its icon system. Here are the available icon options:
 
-- `home` - Home icon
-- `book-open` - Documentation/Book icon
-- `info` - Information icon
-- `folder` - Folder/Categories icon
-- `tag` - Tag icon
-- `mail` - Email/Contact icon
-- `search` - Search icon
-- `code` - Code icon
+- `home` - Home icon (blue)
+- `book-open` - Documentation/Book icon (green)
+- `info` - Information icon (teal)
+- `folder` - Folder/Categories icon (orange)
+- `tag` - Tag icon (purple)
+- `mail` - Email/Contact icon (red)
+- `search` - Search icon (light blue)
+- `code` - Code icon (dual-colored blue/red)
+- `github` - GitHub icon (black/gray)
+- `twitter` - Twitter icon (Twitter blue)
+- `linkedin` - LinkedIn icon (LinkedIn blue)
+- `users` - Users/Team icon (blue)
+- `rss` - RSS Feed icon (orange)
+
+Icons will appear in both the main navigation and footer links, enhancing visual recognition and navigation experience.
 - `github` - GitHub icon
 - `users` - Users/Community icon
 
