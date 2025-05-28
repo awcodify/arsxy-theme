@@ -10,7 +10,14 @@
         <h2 class="footer-heading">Links</h2>
         <ul class="footer-links">
           {%- for item in site.navigation -%}
-          <li><a href="{{ item.url | relative_url }}">{{ item.title | escape }}</a></li>
+          <li>
+            <a href="{{ item.url | relative_url }}">
+              {% if item.icon %}
+                <img src="{{ '/assets/images/icons/' | append: item.icon | append: '.svg' | relative_url }}" alt="{{ item.title | escape }} icon" class="footer-icon" width="16" height="16">
+              {% endif %}
+              {{ item.title | escape }}
+            </a>
+          </li>
           {%- endfor -%}
         </ul>
       </div>
@@ -19,19 +26,48 @@
         <h2 class="footer-heading">Connect</h2>
         <ul class="social-links">
           {%- if site.social.github -%}
-          <li><a href="https://github.com/{{ site.social.github }}"><span class="icon-github">GitHub</span></a></li>
+          <li>
+            <a href="https://github.com/{{ site.social.github }}">
+              <img src="{{ '/assets/images/icons/github.svg' | relative_url }}" alt="GitHub" class="social-icon" width="18" height="18">
+              <span>GitHub</span>
+            </a>
+          </li>
           {%- endif -%}
           
           {%- if site.social.twitter -%}
-          <li><a href="https://twitter.com/{{ site.social.twitter }}"><span class="icon-twitter">Twitter</span></a></li>
+          <li>
+            <a href="https://twitter.com/{{ site.social.twitter }}">
+              <img src="{{ '/assets/images/icons/twitter.svg' | relative_url }}" alt="Twitter" class="social-icon" width="18" height="18">
+              <span>Twitter</span>
+            </a>
+          </li>
           {%- endif -%}
           
           {%- if site.social.linkedin -%}
-          <li><a href="https://linkedin.com/in/{{ site.social.linkedin }}"><span class="icon-linkedin">LinkedIn</span></a></li>
+          <li>
+            <a href="https://linkedin.com/in/{{ site.social.linkedin }}">
+              <img src="{{ '/assets/images/icons/linkedin.svg' | relative_url }}" alt="LinkedIn" class="social-icon" width="18" height="18">
+              <span>LinkedIn</span>
+            </a>
+          </li>
           {%- endif -%}
           
           {%- if site.social.email -%}
-          <li><a href="mailto:{{ site.social.email }}"><span class="icon-mail">Email</span></a></li>
+          <li>
+            <a href="mailto:{{ site.social.email }}">
+              <img src="{{ '/assets/images/icons/mail.svg' | relative_url }}" alt="Email" class="social-icon" width="18" height="18">
+              <span>Email</span>
+            </a>
+          </li>
+          {%- endif -%}
+          
+          {%- if site.rss_enabled != false -%}
+          <li>
+            <a href="{{ 'feed.xml' | relative_url }}">
+              <img src="{{ '/assets/images/icons/rss.svg' | relative_url }}" alt="RSS Feed" class="social-icon" width="18" height="18">
+              <span>RSS Feed</span>
+            </a>
+          </li>
           {%- endif -%}
         </ul>
       </div>
