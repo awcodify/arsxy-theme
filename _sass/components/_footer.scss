@@ -75,9 +75,22 @@
       transition: $transition-base;
       position: relative;
       padding-left: 0; /* Removed padding-left completely */
+      display: flex;
+      align-items: center;
+      
+      .footer-icon,
+      .social-icon {
+        margin-right: 0.5rem;
+        transition: $transition-base;
+      }
       
       &:hover {
         color: $primary-color;
+        
+        .footer-icon,
+        .social-icon {
+          transform: scale(1.1);
+        }
       }
     }
   }
