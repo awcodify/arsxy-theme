@@ -46,7 +46,12 @@
 
         <div class="trigger">
           {%- for item in site.navigation -%}
-            <a class="page-link" href="{{ item.url | relative_url }}">{{ item.title | escape }}</a>
+            <a class="page-link" href="{{ item.url | relative_url }}">
+              {% if item.icon %}
+                <img src="{{ '/assets/images/icons/' | append: item.icon | append: '.svg' | relative_url }}" alt="{{ item.title | escape }} icon" class="nav-icon" width="16" height="16">
+              {% endif %}
+              <span>{{ item.title | escape }}</span>
+            </a>
           {%- endfor -%}
         </div>
       </nav>

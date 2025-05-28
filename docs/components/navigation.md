@@ -17,22 +17,42 @@ The main navigation is configured in your `_config.yml` file:
 ```yaml
 # Navigation
 navigation:
-  main:
-    - title: Home
-      url: /
-    - title: About
-      url: /about/
-    - title: Articles
-      url: /articles/
-    - title: Documentation
-      url: /docs/
-    - title: Categories
-      url: /categories/
-    - title: Tags
-      url: /tags/
-    - title: Contact
-      url: /contact/
+  - title: Home
+    url: /
+    icon: home
+  - title: Documentation
+    url: /docs
+    icon: book-open
+  - title: About
+    url: /about
+    icon: info
+  - title: Categories
+    url: /categories
+    icon: folder
+  - title: Tags
+    url: /tags
+    icon: tag
+  - title: Contact
+    url: /contact
+    icon: mail
 ```
+
+### Navigation Icons
+
+The Arsxy Theme supports icons in the navigation menu. To add an icon to a menu item, include the `icon` property with a valid icon name. The theme uses [Feather Icons](https://feathericons.com/) for its icon system. Here are the available icon options:
+
+- `home` - Home icon
+- `book-open` - Documentation/Book icon
+- `info` - Information icon
+- `folder` - Folder/Categories icon
+- `tag` - Tag icon
+- `mail` - Email/Contact icon
+- `search` - Search icon
+- `code` - Code icon
+- `github` - GitHub icon
+- `users` - Users/Community icon
+
+You can add more icons by editing the `_includes/header.html` file and adding more icon cases.
 
 ### Adding Dropdown Menus
 
