@@ -52,5 +52,5 @@
 
 /* Selective lighten - only lightens dark colors */
 .dark-mode .selective-lighten {
-  filter: brightness(4) saturate(5) hue-rotate(25deg)
+  filter: brightness(4) saturate(5) hue-rotate(25deg);
 }
