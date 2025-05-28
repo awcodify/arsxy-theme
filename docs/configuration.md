@@ -21,6 +21,28 @@ baseurl: "/"                        # The subpath of your site, e.g. /blog
 url: "https://yourdomain.com"       # The base hostname & protocol
 ```
 
+## Header Logo Configuration
+
+Configure the logo in your site header:
+
+```yaml
+# Logo settings for the site header
+header_logo:
+  enabled: true                     # Set to true to use logo instead of text title
+  image: "/assets/images/logo.png"  # Path to your logo image
+  alt: "Your Site Logo"             # Alt text for logo
+  height: 60                        # Logo height in pixels
+  dark_mode_class: "inverted" # How logo appears in dark mode
+```
+
+The `dark_mode_class` option controls how your logo appears in dark mode:
+
+- `original`: No filter is applied (for logos that already have good contrast in dark mode)
+- `inverted`: Inverts all colors (best for black & white logos)
+- `selective-lighten`: Selectively lightens darker colors while preserving lighter ones
+
+For detailed information and examples, see the [Logo Configuration](/docs/logo-configuration/) page.
+
 ## Theme Settings
 
 When using the theme, specify either:
@@ -211,6 +233,14 @@ description: >-
   A personal blog about technology, programming, and life.
 baseurl: "/"
 url: "https://example.com"
+
+# Logo settings
+header_logo:
+  enabled: true
+  image: "/assets/images/logo.png"
+  alt: "My Awesome Site Logo"
+  height: 60
+  dark_mode_class: "inverted"
 
 # Theme settings
 remote_theme: awcodify/arsxy-theme

@@ -36,6 +36,10 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
     color: transparent;
+
+    img {
+      box-shadow: none;
+    }
     
     .site-logo {
       max-height: 60px;

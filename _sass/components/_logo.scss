@@ -1,0 +1,56 @@
+/* Site logo styling */
+.site-logo {
+  display: block;
+  max-height: 30px; /* Match the default height from _config.yml */
+  width: auto;
+  transition: filter 0.3s ease;
+  
+  /* Base styles that work well in light mode */
+  filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.1));
+}
+
+/* Ensure the logo doesn't get too large on small screens */
+@media (max-width: $on-palm) {
+  .site-logo {
+    max-height: 30px;
+  }
+}
+
+/* Logo wrapper to provide better control */
+.site-logo-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+/* 
+ * The following classes can be configured in _config.yml using the 'dark_mode_class' option.
+ * These provide options for making logos visible in dark mode:
+ * 
+ * - original: No filter applied (good when logo already has good contrast in dark mode)
+ * - inverted: Inverts all colors of the logo (best for black & white logos)
+ * - selective-lighten: Selectively lightens dark colors (better for logos with mixed colors)
+ * 
+ * Example configuration in _config.yml:
+ * header_logo:
+ *   enabled: true
+ *   image: "/assets/images/logo.png"
+ *   dark_mode_class: "inverted"
+ */
+
+/* Original - no filter applied */
+.dark-mode .original {
+  /* Keep original logo appearance without any filter */
+  filter: none;
+}
+
+/* Inverted - inverts all colors */
+.dark-mode .inverted {
+  filter: invert(1) brightness(1.2);
+}
+
+/* Selective lighten - only lightens dark colors */
+.dark-mode .selective-lighten {
+  filter: brightness(4) saturate(5) hue-rotate(25deg);
+}

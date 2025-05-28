@@ -13,14 +13,20 @@ Dark mode is enabled by default in the Arsxy theme. Users can toggle between lig
 To control dark mode availability in your site configuration, use the following settings in your `_config.yml`:
 
 ```yaml
-features:
-  dark_mode: true             # Enable dark mode toggle button
-  auto_dark_mode: true        # Respect user's system preferences
+dark_mode:
+  enabled: true             # Enable dark mode toggle button
+  default: false           # Whether dark mode is the default
 ```
 
 ## Respecting System Preferences
 
-When `auto_dark_mode` is set to `true`, the theme will automatically switch to dark mode if the user's operating system or browser is set to prefer dark color schemes. This is done using the `prefers-color-scheme` media query.
+The theme can automatically switch to dark mode if the user's operating system or browser is set to prefer dark color schemes. This is done using the `prefers-color-scheme` media query.
+
+## Logo Configuration in Dark Mode
+
+One common challenge with dark mode is ensuring your site logo remains visible when the background changes. This is especially important for dark or black logos that may become difficult to see against a dark background.
+
+The theme provides options to handle logos in dark mode through the `dark_mode_class` setting in your `_config.yml`. For detailed information about logo configuration including dark mode support, see the [Logo Configuration](/docs/logo-configuration/) page.
 
 ## Customizing Dark Mode Colors
 
