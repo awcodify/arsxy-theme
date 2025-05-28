@@ -11,11 +11,11 @@ url: "https://awcodify.github.io/arsxy-theme" # GitHub Pages URL (replace with y
 
 # Logo settings for the site header
 header_logo:
-  enabled: true # Set to true to use logo image instead of text title
+  enabled: false # Set to true to use logo image instead of text title
   image: "/assets/images/logo.png" # Path to your logo image
   alt: "Arsxy Theme Logo" # Alt text for logo
   height: 60 # Logo height in pixels
-  dark_mode_class: "dark-parts-to-white-dark-mode" # Options: dark-parts-to-white-dark-mode, all-to-white-dark-mode, selective-lighten-dark-mode, invert-in-dark-mode, outline-in-dark-mode, brighten-in-dark-mode
+  dark_mode_class: "selective-lighten" # Options: original, inverted, selective-lighten
 
 # Logo URL for the Jekyll SEO Tag plugin
 logo: "/assets/images/logo.png"
