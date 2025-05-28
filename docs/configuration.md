@@ -32,19 +32,16 @@ header_logo:
   image: "/assets/images/logo.png"  # Path to your logo image
   alt: "Your Site Logo"             # Alt text for logo
   height: 60                        # Logo height in pixels
-  dark_mode_class: "invert-in-dark-mode" # How logo appears in dark mode
+  dark_mode_class: "inverted" # How logo appears in dark mode
 ```
 
 The `dark_mode_class` option controls how your logo appears in dark mode:
 
-- `dark-parts-to-white-dark-mode`: Primarily affects black/dark colors (best for targeting black elements)
-- `all-to-white-dark-mode`: Converts all colors to white, creating a white silhouette
-- `selective-lighten-dark-mode`: Selectively lightens darker colors while preserving lighter ones
-- `invert-in-dark-mode`: Inverts all colors (best for simple black & white logos)
-- `outline-in-dark-mode`: Adds a white outline/glow (default)
-- `brighten-in-dark-mode`: Increases brightness without full color changes
+- `original`: No filter is applied (for logos that already have good contrast in dark mode)
+- `inverted`: Inverts all colors (best for black & white logos)
+- `selective-lighten`: Selectively lightens darker colors while preserving lighter ones
 
-For detailed examples, see the [Logo Dark Mode Configuration](/docs/logo-dark-mode/) page.
+For detailed information and examples, see the [Logo Configuration](/docs/logo-configuration/) page.
 
 ## Theme Settings
 
@@ -243,7 +240,7 @@ header_logo:
   image: "/assets/images/logo.png"
   alt: "My Awesome Site Logo"
   height: 60
-  dark_mode_class: "invert-in-dark-mode"
+  dark_mode_class: "inverted"
 
 # Theme settings
 remote_theme: awcodify/arsxy-theme
