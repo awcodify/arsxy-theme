@@ -117,16 +117,22 @@ favicon:
 navigation:
   - title: Home
     url: /
+    icon: home # Feather icon name
   - title: Documentation
     url: /docs
+    icon: book-open
   - title: About
     url: /about
+    icon: info
   - title: Categories
     url: /categories
+    icon: folder
   - title: Tags
     url: /tags
+    icon: tag
   - title: Contact
     url: /contact
+    icon: mail
 
 # Social links
 social:
