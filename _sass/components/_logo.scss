@@ -1,7 +1,7 @@
 /* Site logo styling */
 .site-logo {
   display: block;
-  max-height: 60px; /* Match the default height from _config.yml */
+  max-height: 30px; /* Match the default height from _config.yml */
   width: auto;
   transition: filter 0.3s ease;
   
@@ -12,7 +12,7 @@
 /* Ensure the logo doesn't get too large on small screens */
 @media (max-width: $on-palm) {
   .site-logo {
-    max-height: 40px;
+    max-height: 30px;
   }
 }
 
@@ -26,52 +26,31 @@
 
 /* 
  * The following classes can be configured in _config.yml using the 'dark_mode_class' option.
- * These provide different options for making logos visible in dark mode:
+ * These provide options for making logos visible in dark mode:
  * 
- * - dark-parts-to-white-dark-mode: Primarily affects black/dark colors (closest option for targeting just black)
- * - all-to-white-dark-mode: Changes all colors to white (good for solid logos on transparent backgrounds)
- * - selective-lighten-dark-mode: Selectively lightens dark colors (better for logos with mixed colors)
- * - invert-in-dark-mode: Inverts all colors of the logo (best for black & white logos)
- * - outline-in-dark-mode: Adds a white outline/glow around the logo (good for darker logos)
- * - brighten-in-dark-mode: Increases brightness without inverting (good for colored logos)
+ * - original: No filter applied (good when logo already has good contrast in dark mode)
+ * - inverted: Inverts all colors of the logo (best for black & white logos)
+ * - selective-lighten: Selectively lightens dark colors (better for logos with mixed colors)
  * 
  * Example configuration in _config.yml:
  * header_logo:
  *   enabled: true
  *   image: "/assets/images/logo.png"
- *   dark_mode_class: "dark-parts-to-white-dark-mode"
+ *   dark_mode_class: "inverted"
  */
 
-/* Class that primarily affects black/dark parts while minimizing changes to other colors */
-html.dark-mode .dark-parts-to-white-dark-mode {
-  /* This combination has a more targeted effect on dark colors */
-  filter: brightness(1.7) contrast(0.3) saturate(0.1);
+/* Original - no filter applied */
+.dark-mode .original {
+  /* Keep original logo appearance without any filter */
+  filter: none;
 }
 
-/* Class that changes all colors to white (preserves transparency) */
-html.dark-mode .all-to-white-dark-mode {
-  /* This turns everything white regardless of original color */
-  filter: brightness(0) invert(1);
-}
-
-/* Class that selectively lightens dark colors while preserving lighter colors better */
-html.dark-mode .selective-lighten-dark-mode {
-  /* This combination more selectively targets darker colors */
-  filter: contrast(0.5) brightness(2) saturate(1);
-}
-
-/* Class for logos that need to be inverted in dark mode */
-html.dark-mode .invert-in-dark-mode {
+/* Inverted - inverts all colors */
+.dark-mode .inverted {
   filter: invert(1) brightness(1.2);
 }
 
-/* Class for logos that need an outline stroke */
-html.dark-mode .outline-in-dark-mode {
-  filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.8))
-         drop-shadow(0 0 2px rgba(255, 255, 255, 0.5));
-}
-
-/* Class for logos that need to be brightened in dark mode */
-html.dark-mode .brighten-in-dark-mode {
-  filter: brightness(2) contrast(1.1);
+/* Selective lighten - only lightens dark colors */
+.dark-mode .selective-lighten {
+  filter: brightness(4) saturate(5) hue-rotate(25deg)
 }
