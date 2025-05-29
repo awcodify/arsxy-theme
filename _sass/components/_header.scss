@@ -4,7 +4,7 @@
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid $border-color;
-  padding: $spacing-md 0;
+  padding: $spacing-sm 0; // Reduced from $spacing-md (30px) to $spacing-sm (15px)
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -43,7 +43,7 @@
     }
     
     .site-logo {
-      max-height: 60px;
+      max-height: 32px; // Reduced from 60px to 32px for shorter header
       width: auto;
       vertical-align: middle;
       transition: $transition-base;

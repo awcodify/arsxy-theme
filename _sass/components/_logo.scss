@@ -1,7 +1,7 @@
 /* Site logo styling */
 .site-logo {
   display: block;
-  max-height: 30px; /* Match the default height from _config.yml */
+  max-height: 32px; /* Reduced from 30px to match header.scss and make header shorter */
   width: auto;
   transition: filter 0.3s ease;
   
@@ -12,7 +12,7 @@
 /* Ensure the logo doesn't get too large on small screens */
 @media (max-width: $on-palm) {
   .site-logo {
-    max-height: 30px;
+    max-height: 28px; /* Slightly smaller on mobile */
   }
 }
 
