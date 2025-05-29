@@ -106,6 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Apply view style
         if (view === 'grid') {
+          postsContainer.classList.add('grid-view');
           postsContainer.style.display = 'grid';
           postsContainer.style.gridTemplateColumns = 'repeat(auto-fit, minmax(350px, 1fr))';
           postsContainer.style.gap = '1.5rem';
@@ -115,6 +116,7 @@ document.addEventListener('DOMContentLoaded', function() {
             card.style.marginBottom = '0';
           });
         } else {
+          postsContainer.classList.remove('grid-view');
           postsContainer.style.display = 'flex';
           postsContainer.style.flexDirection = 'column';
           postsContainer.style.gap = '2rem';
