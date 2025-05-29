@@ -80,7 +80,7 @@ layout: default
       <!-- Posts Feed -->
       <div class="posts-feed" id="posts-feed">
       {% assign posts_to_show = paginator.posts | default: site.posts %}
-      {% for post in posts_to_show limit:10 %}
+      {% for post in posts_to_show limit:15 %}
         <article class="post-card" 
                  data-categories="{% for cat in post.categories %}{{ cat | slugify }} {% endfor %}"
                  data-featured="{% if post.featured %}true{% else %}false{% endif %}"
