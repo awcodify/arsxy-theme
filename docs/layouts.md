@@ -30,6 +30,29 @@ title: Home
 ---
 ```
 
+### Home-v2 Layout (Social Media Inspired)
+**New!** The home-v2 layout provides a modern, social media-inspired alternative to the traditional blog homepage. This layout encourages visitors to explore content through Instagram-style stories, engaging post cards, and an elegant sidebar.
+
+**Key Features:**
+- Instagram-style category stories with gradient rings
+- Social media-style post cards with author avatars
+- Interactive filter tabs (All, Featured, Recent posts)
+- Feed/Grid view toggle
+- Engaging sidebar with profile card and trending topics
+- Smart action buttons (Read, Comments, Share)
+- Fully responsive design with dark mode support
+
+**Usage:**
+```yaml
+---
+layout: home-v2
+title: "Social Media Inspired Home"
+description: "A modern homepage layout"
+---
+```
+
+**Learn More:** See the [Home-v2 Layout Guide](home-v2-layout.md) for detailed setup and customization instructions.
+
 ### Post Layout
 This layout is optimized for blog posts. It includes features like reading time estimation, author information, social sharing buttons, and related posts.
 
