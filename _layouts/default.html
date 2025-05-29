@@ -112,5 +112,8 @@
   
   <script src="{{ "/assets/js/main.js" | relative_url }}" defer></script>
   <script src="{{ "/assets/js/search.js" | relative_url }}" defer></script>
+  {% if page.layout == 'home-v2' or layout.name == 'home-v2' %}
+    <script src="{{ "/assets/js/home-v2.js" | relative_url }}" defer></script>
+  {% endif %}
 </body>
 </html>

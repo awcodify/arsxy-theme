@@ -18,6 +18,7 @@ A clean, modern Jekyll theme optimized for technical blogs and documentation sit
 - **Clean & Modern Design** - Minimal, distraction-free reading experience
 - **Responsive Layout** - Optimized for all devices from mobile to desktop
 - **Dark Mode Support** - Built-in dark mode toggle option with logo treatment options
+- **Social Media Inspired Layout** - **New!** Modern home-v2 layout with Instagram-style stories and engaging post cards
 - **Comment System** - Support for Giscus (GitHub Discussions) comments
 - **Code Highlighting** - Beautiful syntax highlighting for technical content
 - **Table of Contents** - Automatically generated for longer articles
