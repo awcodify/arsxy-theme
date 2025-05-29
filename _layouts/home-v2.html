@@ -11,7 +11,11 @@ layout: default
           <div class="avatar-ring">
             <img src="{{ '/assets/images/avatar.jpg' | relative_url }}" alt="All Categories" 
                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-            <div class="story-placeholder" style="display: none;">📚</div>
+            <div class="story-placeholder" style="display: none;">
+              <img src="{{ '/assets/images/icons/default-category.svg' | relative_url }}" 
+                   alt="All Categories" 
+                   style="width: 100%; height: 100%; object-fit: cover;" />
+            </div>
           </div>
         </div>
         <span class="story-label">All</span>
@@ -19,21 +23,26 @@ layout: default
       
       {% assign categories_list = site.categories %}
       {% for category in categories_list limit:8 %}
+        {% comment %}Find the most recent post with an image in this category{% endcomment %}
+        {% assign category_posts = category[1] | where_exp: "post", "post.image" %}
+        {% assign latest_post = category_posts | first %}
+        
         <div class="story-item" data-category="{{ category[0] | slugify }}">
           <div class="story-avatar">
             <div class="avatar-ring">
-              <img src="{{ '/assets/images/categories/' | append: category[0] | slugify | append: '.jpg' | relative_url }}" 
-                   alt="{{ category[0] }}" 
-                   onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+              {% if latest_post.image %}
+                <img src="{{ '/assets/images/' | append: latest_post.image | relative_url }}" 
+                     alt="{{ category[0] }}" 
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+              {% else %}
+                <img src="{{ '/assets/images/categories/' | append: category[0] | slugify | append: '.jpg' | relative_url }}" 
+                     alt="{{ category[0] }}" 
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+              {% endif %}
               <div class="story-placeholder" style="display: none;">
-                {% case category[0] %}
-                  {% when 'Tutorial' %}📚
-                  {% when 'Features' %}⚡
-                  {% when 'Demo' %}🎨
-                  {% when 'SEO' %}🔍
-                  {% when 'Performance' %}🚀
-                  {% else %}📝
-                {% endcase %}
+                <img src="{{ '/assets/images/icons/default-category.svg' | relative_url }}" 
+                     alt="{{ category[0] }} category" 
+                     style="width: 100%; height: 100%; object-fit: cover;" />
               </div>
             </div>
           </div>
