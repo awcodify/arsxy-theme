@@ -71,6 +71,47 @@ html.dark-mode {
       }
     }
     
+    /* Nested navigation dropdown styles for dark mode */
+    .nav-item-dropdown {
+      .dropdown-menu {
+        background: rgba($dark-surface, 0.95);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-color: $dark-border-color;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      }
+      
+      .dropdown-link {
+        color: $dark-text-color;
+        
+        &:hover {
+          background-color: rgba(lighten($primary-color, 20%), 0.1);
+          color: lighten($primary-color, 20%);
+          border-left-color: lighten($primary-color, 20%);
+        }
+      }
+      
+      .dropdown-submenu {
+        .submenu {
+          background: rgba($dark-surface, 0.95);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          border-color: $dark-border-color;
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .submenu-link {
+          color: $dark-text-color;
+          
+          &:hover {
+            background-color: rgba(lighten($secondary-color, 10%), 0.1);
+            color: lighten($secondary-color, 10%);
+            border-left-color: lighten($secondary-color, 10%);
+          }
+        }
+      }
+    }
+    
     @media (max-width: $on-palm) {
       background-color: rgba($dark-surface, 0.95);
       backdrop-filter: blur(10px);
@@ -84,6 +125,38 @@ html.dark-mode {
       
       input ~ .trigger {
         background: linear-gradient(to bottom right, rgba($dark-surface, 0.95), rgba($dark-surface, 0.99));
+      }
+      
+      /* Mobile nested navigation dark mode */
+      .nav-item-dropdown {
+        .dropdown-menu {
+          background: rgba($dark-border-color, 0.2);
+        }
+        
+        .dropdown-link {
+          color: $dark-text-color;
+          
+          &:hover {
+            background-color: rgba(lighten($primary-color, 20%), 0.1);
+            color: lighten($primary-color, 20%);
+          }
+        }
+        
+        .dropdown-submenu {
+          .submenu {
+            background: rgba($dark-border-color, 0.3);
+            border-left-color: rgba(lighten($secondary-color, 10%), 0.4);
+          }
+          
+          .submenu-link {
+            color: $dark-text-color !important;
+            
+            &:hover {
+              background-color: rgba(lighten($secondary-color, 10%), 0.1);
+              color: lighten($secondary-color, 10%);
+            }
+          }
+        }
       }
     }
     
@@ -847,4 +920,43 @@ body, a, .site-header, .site-nav, .site-footer, .post,
 .post-navigation a, .tag, .theme-toggle, .footer-col h2::after,
 .post-content h2::after, .heading-anchor, .social-icon {
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+/* HIGH SPECIFICITY DARK MODE OVERRIDES - Mobile Navigation Fix */
+@media screen and (max-width: 600px) {
+  html.dark-mode .site-nav {
+    .nav-item-dropdown {
+      .dropdown-menu {
+        .dropdown-submenu {
+          .submenu {
+            .submenu-link {
+              color: $dark-text-color !important;
+              
+              &:hover {
+                color: lighten($secondary-color, 10%) !important;
+                background-color: rgba(lighten($secondary-color, 10%), 0.1) !important;
+              }
+            }
+          }
+        }
+        
+        .dropdown-link {
+          color: $dark-text-color !important;
+          
+          &:hover {
+            color: lighten($primary-color, 20%) !important;
+            background-color: rgba(lighten($primary-color, 20%), 0.1) !important;
+          }
+        }
+      }
+    }
+    
+    .page-link {
+      color: $dark-text-color !important;
+      
+      &:hover {
+        color: lighten($primary-color, 20%) !important;
+      }
+    }
+  }
 }

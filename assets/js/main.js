@@ -14,6 +14,9 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initialize mobile navigation
   initMobileNav();
   
+  // Initialize nested navigation
+  initNestedNav();
+  
   // Initialize Giscus comments
   initGiscus();
 });
@@ -356,6 +359,320 @@ function initMobileNav() {
       navTrigger.checked = false;
     }
   });
+}
+
+/**
+ * Nested Navigation Functionality
+ */
+function initNestedNav() {
+  // Initialize ARIA attributes for accessibility
+  initAccessibilityAttributes();
+  
+  // Handle mobile dropdown toggles
+  if (window.innerWidth <= 767) {
+    initMobileDropdowns();
+  }
+  
+  // Re-initialize on window resize with debouncing
+  let resizeTimeout;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      if (window.innerWidth <= 767) {
+        initMobileDropdowns();
+      } else {
+        // Remove mobile event listeners on desktop
+        removeMobileDropdowns();
+      }
+    }, 100); // Debounce resize events
+  });
+}
+
+function initAccessibilityAttributes() {
+  // Add ARIA attributes for dropdowns
+  const dropdownToggles = document.querySelectorAll('.has-dropdown');
+  dropdownToggles.forEach((toggle, index) => {
+    const dropdown = toggle.nextElementSibling;
+    if (dropdown && dropdown.classList.contains('dropdown-menu')) {
+      // Set unique IDs and ARIA attributes
+      const dropdownId = `dropdown-${index}`;
+      dropdown.id = dropdownId;
+      toggle.setAttribute('aria-haspopup', 'true');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-controls', dropdownId);
+    }
+  });
+  
+  // Add ARIA attributes for submenus
+  const submenuToggles = document.querySelectorAll('.has-submenu');
+  submenuToggles.forEach((toggle, index) => {
+    const submenu = toggle.nextElementSibling;
+    if (submenu && submenu.classList.contains('submenu')) {
+      const submenuId = `submenu-${index}`;
+      submenu.id = submenuId;
+      toggle.setAttribute('aria-haspopup', 'true');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-controls', submenuId);
+    }
+  });
+}
+
+function initMobileDropdowns() {
+  // Remove any existing event listeners first
+  removeMobileDropdowns();
+  
+  // Handle main dropdown toggles with improved touch handling
+  const dropdownToggles = document.querySelectorAll('.has-dropdown');
+  dropdownToggles.forEach(toggle => {
+    // Prevent double-tap zoom on iOS
+    toggle.style.touchAction = 'manipulation';
+    
+    // Use a single touch/click handler with better event management
+    const handleToggle = function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const dropdown = this.nextElementSibling;
+      if (dropdown && dropdown.classList.contains('dropdown-menu')) {
+        const isActive = dropdown.classList.contains('active');
+        
+        // Close all other dropdowns first
+        document.querySelectorAll('.dropdown-menu.active').forEach(otherDropdown => {
+          if (otherDropdown !== dropdown) {
+            otherDropdown.classList.remove('active');
+            const otherToggle = otherDropdown.previousElementSibling;
+            if (otherToggle) {
+              otherToggle.setAttribute('aria-expanded', 'false');
+              const otherArrow = otherToggle.querySelector('.dropdown-arrow');
+              if (otherArrow) otherArrow.style.transform = 'rotate(0deg)';
+            }
+          }
+        });
+        
+        // Toggle current dropdown
+        dropdown.classList.toggle('active', !isActive);
+        this.setAttribute('aria-expanded', !isActive ? 'true' : 'false');
+        
+        // Update arrow rotation with smooth animation
+        const arrow = this.querySelector('.dropdown-arrow');
+        if (arrow) {
+          arrow.style.transform = !isActive ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+        
+        // Add focus management for better accessibility
+        if (!isActive) {
+          const firstLink = dropdown.querySelector('.dropdown-link');
+          if (firstLink) {
+            setTimeout(() => firstLink.focus(), 100);
+          }
+        }
+      }
+    };
+    
+    // Store the handler for later removal
+    toggle._mobileToggleHandler = handleToggle;
+    toggle.addEventListener('click', handleToggle);
+    
+    // Add keyboard support
+    const handleKeydown = function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handleToggle.call(this, e);
+      }
+    };
+    toggle._mobileKeydownHandler = handleKeydown;
+    toggle.addEventListener('keydown', handleKeydown);
+  });
+  
+  // Handle submenu toggles with improved touch handling
+  const submenuToggles = document.querySelectorAll('.has-submenu');
+  submenuToggles.forEach(toggle => {
+    toggle.style.touchAction = 'manipulation';
+    
+    const handleSubmenuToggle = function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const submenu = this.nextElementSibling;
+      if (submenu && submenu.classList.contains('submenu')) {
+        const isActive = submenu.classList.contains('active');
+        
+        // Close all other submenus first
+        document.querySelectorAll('.submenu.active').forEach(otherSubmenu => {
+          if (otherSubmenu !== submenu) {
+            otherSubmenu.classList.remove('active');
+            const otherToggle = otherSubmenu.previousElementSibling;
+            if (otherToggle) {
+              otherToggle.setAttribute('aria-expanded', 'false');
+              const otherArrow = otherToggle.querySelector('.submenu-arrow');
+              if (otherArrow) otherArrow.style.transform = 'rotate(0deg)';
+            }
+          }
+        });
+        
+        // Toggle current submenu
+        submenu.classList.toggle('active', !isActive);
+        this.setAttribute('aria-expanded', !isActive ? 'true' : 'false');
+        
+        // Update arrow rotation
+        const arrow = this.querySelector('.submenu-arrow');
+        if (arrow) {
+          arrow.style.transform = !isActive ? 'rotate(90deg)' : 'rotate(0deg)';
+        }
+        
+        // Focus management
+        if (!isActive) {
+          const firstLink = submenu.querySelector('.submenu-link');
+          if (firstLink) {
+            setTimeout(() => firstLink.focus(), 100);
+          }
+        }
+      }
+    };
+    
+    toggle._mobileSubmenuHandler = handleSubmenuToggle;
+    toggle.addEventListener('click', handleSubmenuToggle);
+    
+    const handleSubmenuKeydown = function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handleSubmenuToggle.call(this, e);
+      }
+    };
+    toggle._mobileSubmenuKeydownHandler = handleSubmenuKeydown;
+    toggle.addEventListener('keydown', handleSubmenuKeydown);
+  });
+  
+  // Close dropdowns when clicking outside with improved detection
+  const handleOutsideClick = function(e) {
+    // Don't close if clicking on navigation elements
+    if (!e.target.closest('.site-nav')) {
+      document.querySelectorAll('.dropdown-menu.active').forEach(dropdown => {
+        dropdown.classList.remove('active');
+        const parentToggle = dropdown.previousElementSibling;
+        if (parentToggle) {
+          parentToggle.setAttribute('aria-expanded', 'false');
+          const arrow = parentToggle.querySelector('.dropdown-arrow');
+          if (arrow) arrow.style.transform = 'rotate(0deg)';
+        }
+      });
+      
+      document.querySelectorAll('.submenu.active').forEach(submenu => {
+        submenu.classList.remove('active');
+        const parentToggle = submenu.previousElementSibling;
+        if (parentToggle) {
+          parentToggle.setAttribute('aria-expanded', 'false');
+          const arrow = parentToggle.querySelector('.submenu-arrow');
+          if (arrow) arrow.style.transform = 'rotate(0deg)';
+        }
+      });
+    }
+  };
+  
+  // Store handler for removal
+  document._mobileOutsideClickHandler = handleOutsideClick;
+  document.addEventListener('click', handleOutsideClick);
+  document.addEventListener('touchstart', handleOutsideClick);
+  
+  // Enhanced keyboard navigation
+  const handleKeydown = function(e) {
+    if (e.key === 'Escape') {
+      // Close all dropdowns on Escape
+      document.querySelectorAll('.dropdown-menu.active, .submenu.active').forEach(menu => {
+        menu.classList.remove('active');
+        const parentToggle = menu.previousElementSibling;
+        if (parentToggle) {
+          parentToggle.setAttribute('aria-expanded', 'false');
+          parentToggle.focus(); // Return focus to toggle
+        }
+      });
+      
+      // Reset all arrows
+      document.querySelectorAll('.dropdown-arrow').forEach(arrow => {
+        arrow.style.transform = 'rotate(0deg)';
+      });
+      document.querySelectorAll('.submenu-arrow').forEach(arrow => {
+        arrow.style.transform = 'rotate(0deg)';
+      });
+    }
+    
+    // Arrow key navigation within dropdowns
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      const activeDropdown = document.querySelector('.dropdown-menu.active, .submenu.active');
+      if (activeDropdown) {
+        e.preventDefault();
+        const links = activeDropdown.querySelectorAll('.dropdown-link, .submenu-link');
+        const currentIndex = Array.from(links).indexOf(document.activeElement);
+        
+        let nextIndex;
+        if (e.key === 'ArrowDown') {
+          nextIndex = currentIndex < links.length - 1 ? currentIndex + 1 : 0;
+        } else {
+          nextIndex = currentIndex > 0 ? currentIndex - 1 : links.length - 1;
+        }
+        
+        if (links[nextIndex]) {
+          links[nextIndex].focus();
+        }
+      }
+    }
+  };
+  
+  document._mobileKeydownHandler = handleKeydown;
+  document.addEventListener('keydown', handleKeydown);
+}
+
+function removeMobileDropdowns() {
+  // Remove active classes
+  document.querySelectorAll('.dropdown-menu.active, .submenu.active').forEach(menu => {
+    menu.classList.remove('active');
+    const parentToggle = menu.previousElementSibling;
+    if (parentToggle) {
+      parentToggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+  
+  // Reset arrow positions
+  document.querySelectorAll('.dropdown-arrow, .submenu-arrow').forEach(arrow => {
+    arrow.style.transform = 'rotate(0deg)';
+  });
+  
+  // Remove event listeners to prevent memory leaks
+  const dropdownToggles = document.querySelectorAll('.has-dropdown');
+  dropdownToggles.forEach(toggle => {
+    if (toggle._mobileToggleHandler) {
+      toggle.removeEventListener('click', toggle._mobileToggleHandler);
+      delete toggle._mobileToggleHandler;
+    }
+    if (toggle._mobileKeydownHandler) {
+      toggle.removeEventListener('keydown', toggle._mobileKeydownHandler);
+      delete toggle._mobileKeydownHandler;
+    }
+  });
+  
+  const submenuToggles = document.querySelectorAll('.has-submenu');
+  submenuToggles.forEach(toggle => {
+    if (toggle._mobileSubmenuHandler) {
+      toggle.removeEventListener('click', toggle._mobileSubmenuHandler);
+      delete toggle._mobileSubmenuHandler;
+    }
+    if (toggle._mobileSubmenuKeydownHandler) {
+      toggle.removeEventListener('keydown', toggle._mobileSubmenuKeydownHandler);
+      delete toggle._mobileSubmenuKeydownHandler;
+    }
+  });
+  
+  // Remove document-level event listeners
+  if (document._mobileOutsideClickHandler) {
+    document.removeEventListener('click', document._mobileOutsideClickHandler);
+    document.removeEventListener('touchstart', document._mobileOutsideClickHandler);
+    delete document._mobileOutsideClickHandler;
+  }
+  
+  if (document._mobileKeydownHandler) {
+    document.removeEventListener('keydown', document._mobileKeydownHandler);
+    delete document._mobileKeydownHandler;
+  }
 }
 
 /**
