@@ -17,17 +17,32 @@
   --home-v2-shadow-hover: rgba(0, 0, 0, 0.15);
 }
 
-// Dark theme support
-@media (prefers-color-scheme: dark) {
-  :root {
-    --home-v2-bg: #0f172a;
-    --home-v2-card-bg: #1e293b;
-    --home-v2-text: #f8fafc;
-    --home-v2-text-muted: #94a3b8;
-    --home-v2-border: #334155;
-    --home-v2-hover: #334155;
-    --home-v2-shadow: rgba(0, 0, 0, 0.3);
-    --home-v2-shadow-hover: rgba(0, 0, 0, 0.4);
+// Dark theme support - use class-based dark mode instead of media query
+html.dark-mode {
+  --home-v2-bg: #0f172a;
+  --home-v2-card-bg: #1e293b;
+  --home-v2-text: #f8fafc;
+  --home-v2-text-muted: #94a3b8;
+  --home-v2-border: #334155;
+  --home-v2-hover: #334155;
+  --home-v2-shadow: rgba(0, 0, 0, 0.3);
+  --home-v2-shadow-hover: rgba(0, 0, 0, 0.4);
+}
+
+.layout-home-v2 {
+  background: var(--home-v2-bg);
+  
+  .page-content {
+    background: var(--home-v2-bg);
+  }
+  
+  .site-header {
+    background-color: var(--home-v2-card-bg);
+    border-bottom: 1px solid var(--home-v2-border);
+    
+    .wrapper {
+      background: inherit;
+    }
   }
 }
 
