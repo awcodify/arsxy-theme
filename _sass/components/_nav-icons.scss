@@ -20,11 +20,19 @@
 /* Mobile navigation icons */
 @media screen and (max-width: $on-palm) {
   .site-nav .page-link {
-    display: flex;
-    align-items: center;
+    /* Use our unified mobile navigation styles from _header.scss */
+    /* Removed conflicting styles to prevent override issues */
     
     .nav-icon {
       margin-right: 0.75rem;
+    }
+    
+    /* Ensure no border-bottom effects */
+    border-bottom: none !important;
+    
+    &::after, &::before {
+      display: none !important;
+      border-bottom: none !important;
     }
   }
 }

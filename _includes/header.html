@@ -46,12 +46,80 @@
 
         <div class="trigger">
           {%- for item in site.navigation -%}
-            <a class="page-link" href="{{ item.url | relative_url }}">
-              {% if item.icon %}
-                <img src="{{ '/assets/images/icons/' | append: item.icon | append: '.svg' | relative_url }}" alt="{{ item.title | escape }} icon" class="nav-icon" width="16" height="16">
-              {% endif %}
-              <span>{{ item.title | escape }}</span>
-            </a>
+            {% if item.children %}
+              <div class="nav-item-dropdown">
+                <a class="page-link has-dropdown" 
+                   href="{{ item.url | relative_url }}"
+                   role="button"
+                   aria-haspopup="true"
+                   aria-expanded="false"
+                   tabindex="0">
+                  {% if item.icon %}
+                    <img src="{{ '/assets/images/icons/' | append: item.icon | append: '.svg' | relative_url }}" alt="{{ item.title | escape }} icon" class="nav-icon" width="16" height="16">
+                  {% endif %}
+                  <span>{{ item.title | escape }}</span>
+                  <svg class="dropdown-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6,9 12,15 18,9"></polyline>
+                  </svg>
+                </a>
+                <div class="dropdown-menu" role="menu">
+                  {%- for child in item.children -%}
+                    {% if child.children %}
+                      <div class="dropdown-submenu">
+                        <a href="{{ child.url | relative_url }}" 
+                           class="dropdown-link has-submenu"
+                           role="button"
+                           aria-haspopup="true"
+                           aria-expanded="false"
+                           tabindex="0">
+                          {% if child.icon %}
+                            <img src="{{ '/assets/images/icons/' | append: child.icon | append: '.svg' | relative_url }}" alt="{{ child.title | escape }} icon" class="nav-icon" width="14" height="14">
+                          {% endif %}
+                          <span>{{ child.title | escape }}</span>
+                          <svg class="submenu-arrow" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9,18 15,12 9,6"></polyline>
+                          </svg>
+                        </a>
+                        <div class="submenu" role="menu">
+                          {%- for grandchild in child.children -%}
+                            <a href="{{ grandchild.url | relative_url }}" 
+                               class="submenu-link"
+                               role="menuitem"
+                               tabindex="-1">
+                              {% if grandchild.icon %}
+                                <img src="{{ '/assets/images/icons/' | append: grandchild.icon | append: '.svg' | relative_url }}" alt="{{ grandchild.title | escape }} icon" class="nav-icon" width="12" height="12">
+                              {% endif %}
+                              <span>{{ grandchild.title | escape }}</span>
+                            </a>
+                          {%- endfor -%}
+                        </div>
+                      </div>
+                    {% else %}
+                      <a href="{{ child.url | relative_url }}" 
+                         class="dropdown-link"
+                         role="menuitem"
+                         tabindex="-1">
+                        {% if child.icon %}
+                          <img src="{{ '/assets/images/icons/' | append: child.icon | append: '.svg' | relative_url }}" alt="{{ child.title | escape }} icon" class="nav-icon" width="14" height="14">
+                        {% endif %}
+                        <span>{{ child.title | escape }}</span>
+                      </a>
+                    {% endif %}
+                  {%- endfor -%}
+                </div>
+              </div>
+            {% else %}
+              <a class="page-link" href="{{ item.url | relative_url }}">
+                {% if item.icon %}
+                  <img src="{{ '/assets/images/icons/' | append: item.icon | append: '.svg' | relative_url }}" alt="{{ item.title | escape }} icon" class="nav-icon" width="16" height="16">
+                {% endif %}
+                <span>{{ item.title | escape }}</span>
+                <!-- Invisible placeholder arrow for alignment consistency -->
+                <svg class="dropdown-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0;">
+                  <polyline points="6,9 12,15 18,9"></polyline>
+                </svg>
+              </a>
+            {% endif %}
           {%- endfor -%}
         </div>
       </nav>
