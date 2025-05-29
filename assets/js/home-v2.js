@@ -60,12 +60,6 @@ document.addEventListener('DOMContentLoaded', function() {
             case 'featured':
               shouldShow = post.dataset.featured === 'true';
               break;
-            case 'recent':
-              // Show posts from last 7 days
-              const postTime = new Date(post.querySelector('time').getAttribute('datetime')).getTime();
-              const weekAgo = Date.now() - (7 * 24 * 60 * 60 * 1000);
-              shouldShow = postTime > weekAgo;
-              break;
             case 'all':
             default:
               shouldShow = true;

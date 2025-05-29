@@ -21,7 +21,7 @@ The `home-v2` layout provides a modern, social media-inspired alternative to the
 - Interactive action buttons
 
 ### 🔧 Interactive Controls
-- Filter tabs: All Posts, Featured, Recent
+- Filter tabs: All Posts, Featured
 - View toggles: Feed view vs Grid view
 - Load more functionality
 
@@ -125,7 +125,7 @@ The layout automatically supports dark mode through media queries:
 The layout includes interactive JavaScript features:
 
 - **Stories Navigation**: Click story items to filter posts by category
-- **Post Filtering**: Use filter tabs to show all, featured, or recent posts
+- **Post Filtering**: Use filter tabs to show all or featured posts
 - **View Toggle**: Switch between feed and grid layouts
 - **Share Actions**: Native sharing or copy-to-clipboard fallback
 - **Load More**: Pagination with smooth loading states

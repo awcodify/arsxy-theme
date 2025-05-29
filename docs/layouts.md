@@ -36,7 +36,7 @@ title: Home
 **Key Features:**
 - Instagram-style category stories with gradient rings
 - Social media-style post cards with author avatars
-- Interactive filter tabs (All, Featured, Recent posts)
+- Interactive filter tabs (All Posts, Featured)
 - Feed/Grid view toggle
 - Engaging sidebar with profile card and trending topics
 - Smart action buttons (Read, Comments, Share)
