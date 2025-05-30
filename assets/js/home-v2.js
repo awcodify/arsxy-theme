@@ -6,36 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
   if (!document.querySelector('.home-v2')) return;
   
   // Initialize all features
-  initStoriesNavigation();
   initPostFiltering();
   initViewToggle();
-  
-  // Stories Navigation
-  function initStoriesNavigation() {
-    const storyItems = document.querySelectorAll('.story-item');
-    
-    storyItems.forEach(item => {
-      item.addEventListener('click', function() {
-        // Remove active class from all stories
-        storyItems.forEach(story => story.classList.remove('active'));
-        
-        // Add active class to clicked story
-        this.classList.add('active');
-        
-        // Get category filter
-        const category = this.dataset.category;
-        
-        // Filter posts based on category
-        filterPostsByCategory(category);
-        
-        // Smooth scroll to posts section
-        const postsSection = document.querySelector('.posts-feed');
-        if (postsSection) {
-          postsSection.scrollIntoView({ behavior: 'smooth' });
-        }
-      });
-    });
-  }
   
   // Post Filtering
   function initPostFiltering() {

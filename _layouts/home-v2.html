@@ -6,7 +6,7 @@ layout: default
   <!-- Stories-style Category Navigation -->
   <section class="stories-section">
     <div class="stories-container">
-      <div class="story-item active" data-category="all">
+      <a href="{{ '/' | relative_url }}" class="story-item active" data-category="all">
         <div class="story-avatar">
           <div class="avatar-ring">
             <div class="story-placeholder">
@@ -17,15 +17,16 @@ layout: default
           </div>
         </div>
         <span class="story-label">All</span>
-      </div>
+      </a>
       
       {% assign categories_list = site.categories %}
       {% for category in categories_list limit:8 %}
         {% comment %}Find the most recent post with an image in this category{% endcomment %}
         {% assign category_posts = category[1] | where_exp: "post", "post.image" %}
         {% assign latest_post = category_posts | first %}
+        {% assign category_slug = category[0] | slugify %}
         
-        <div class="story-item" data-category="{{ category[0] | slugify }}">
+        <a href="{{ '/categories/#' | append: category_slug | relative_url }}" class="story-item" data-category="{{ category_slug }}">
           <div class="story-avatar">
             <div class="avatar-ring">
               {% if latest_post.image %}
@@ -33,7 +34,7 @@ layout: default
                      alt="{{ category[0] }}" 
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
               {% else %}
-                <img src="{{ '/assets/images/categories/' | append: category[0] | slugify | append: '.jpg' | relative_url }}" 
+                <img src="{{ '/assets/images/categories/' | append: category_slug | append: '.jpg' | relative_url }}" 
                      alt="{{ category[0] }}" 
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
               {% endif %}
@@ -45,7 +46,7 @@ layout: default
             </div>
           </div>
           <span class="story-label">{{ category[0] }}</span>
-        </div>
+        </a>
       {% endfor %}
     </div>
   </section>
