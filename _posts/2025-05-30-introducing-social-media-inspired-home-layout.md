@@ -8,6 +8,7 @@ categories: [Features, Layout, Design]
 tags: [home-v2, social-media, instagram, modern-design, user-experience, responsive]
 image: "social-media-inspired-home-layout.webp"
 description: "Discover the revolutionary new home-v2 layout that transforms your Jekyll blog into a modern, social media-inspired experience with Instagram-style stories, interactive post cards, and engaging sidebar widgets."
+featured: true
 ---
 
 We're thrilled to announce the most significant update to Arsxy Theme yet: the **Social Media-Inspired Home Layout** (`home-v2`)! This innovative layout transforms your traditional blog homepage into a modern, engaging experience that draws inspiration from popular social media platforms while maintaining the professionalism your readers expect.

@@ -6,6 +6,7 @@ categories: Theme
 tags: jekyll arsxy advanced-features customization
 author: Awcodify
 image: theme-demo-2.webp
+featured: true
 ---
 
 Arsxy theme offers many advanced features beyond the basics. This guide explores the powerful capabilities that make Arsxy an excellent choice for technical blogs, documentation sites, and developer portfolios.

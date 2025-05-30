@@ -2,7 +2,6 @@
 layout: post
 title: "Customizing Your Homepage Hero Section in Arsxy Theme"
 categories: [Features, customization]
-featured: true
 image: theme-demo-2.webp
 description: "Learn how to customize or completely disable the homepage hero section in Arsxy Theme using simple configuration options."
 author: awcodify

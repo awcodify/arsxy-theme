@@ -15,6 +15,7 @@ Welcome to the official documentation for Arsxy Theme, a clean, modern Jekyll th
 ## Core Features
 
 * [Layout Options](./layouts/)
+* [Home-v2 Layout (Social Media Inspired)](./home-v2-layout/)
 * [Dark Mode](./dark-mode/)
 * [SEO Optimization](./seo/)
 * [Responsive Design](./responsive-design/)
