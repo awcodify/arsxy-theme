@@ -207,6 +207,36 @@ layout: default
         {% endfor %}
       </div>
     </div>
+
+    <!-- Popular Tags -->
+    <div class="sidebar-widget tags-widget">
+      <h3 class="widget-title">Popular Tags</h3>
+      <div class="tags-cloud">
+        {% comment %}Create sortable tag data{% endcomment %}
+        {% assign tag_list = "" | split: "" %}
+        {% for tag in site.tags %}
+          {% assign post_count = tag[1].size %}
+          {% assign padded_count = post_count %}
+          {% if post_count < 10 %}
+            {% assign padded_count = "0" | append: post_count %}
+          {% endif %}
+          {% assign tag_data = padded_count | append: "|" | append: tag[0] %}
+          {% assign tag_list = tag_list | push: tag_data %}
+        {% endfor %}
+        {% assign sorted_tags = tag_list | sort | reverse %}
+        
+        {% for tag_item in sorted_tags limit:15 %}
+          {% assign parts = tag_item | split: "|" %}
+          {% assign post_count = parts[0] | plus: 0 %}
+          {% assign tag_name = parts[1] | slugify %}
+          {% assign tag_display = parts[1] %}
+          <a href="{{ '/tags/#' | append: tag_name | relative_url }}" class="tag-item">
+            <span class="tag-hash">#</span>{{ tag_display }}
+            <span class="tag-count">{{ post_count }}</span>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
     </aside>
   </div>
  

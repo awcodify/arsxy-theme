@@ -1116,6 +1116,57 @@ html.dark-mode {
       }
     }
     
+    // Tags Widget  
+    .tags-widget {
+      .tags-cloud {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        
+        .tag-item {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.25rem;
+          padding: 0.4rem 0.8rem;
+          background: var(--home-v2-hover);
+          border: 1px solid var(--home-v2-border);
+          border-radius: 20px;
+          text-decoration: none;
+          color: var(--home-v2-text);
+          font-size: 0.8rem;
+          font-weight: 500;
+          transition: all 0.3s ease;
+          
+          &:hover {
+            background: var(--home-v2-primary);
+            border-color: var(--home-v2-primary);
+            color: white;
+            transform: translateY(-1px);
+            
+            .tag-hash, .tag-count {
+              color: white;
+            }
+          }
+          
+          .tag-hash {
+            color: var(--home-v2-primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+          }
+          
+          .tag-count {
+            background: var(--home-v2-border);
+            color: var(--home-v2-text-muted);
+            padding: 0.1rem 0.4rem;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-left: 0.25rem;
+          }
+        }
+      }
+    }
+    
     // Categories Widget
     .categories-widget {
       .categories-grid {
