@@ -9,9 +9,7 @@ layout: default
       <div class="story-item active" data-category="all">
         <div class="story-avatar">
           <div class="avatar-ring">
-            <img src="{{ '/assets/images/avatar.jpg' | relative_url }}" alt="All Categories" 
-                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-            <div class="story-placeholder" style="display: none;">
+            <div class="story-placeholder">
               <img src="{{ '/assets/images/icons/default-category.svg' | relative_url }}" 
                    alt="All Categories" 
                    style="width: 100%; height: 100%; object-fit: cover;" />
@@ -89,7 +87,7 @@ layout: default
           <div class="post-header">
             <div class="author-info">
               <div class="author-avatar">
-                <img src="{{ post.author_avatar | default: '/assets/images/default-avatar.jpg' | relative_url }}" 
+                <img src="{{ post.author_avatar | relative_url }}" 
                      alt="{{ post.author | default: site.author }}"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
                 <div class="avatar-placeholder" style="display: none;">
@@ -323,4 +321,5 @@ layout: default
     </div>
     </aside>
   </div>
+ 
 </div>
