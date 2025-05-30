@@ -6,60 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
   if (!document.querySelector('.home-v2')) return;
   
   // Initialize all features
-  initPostFiltering();
   initViewToggle();
-  
-  // Post Filtering
-  function initPostFiltering() {
-    const filterButtons = document.querySelectorAll('.filter-tab');
-    const posts = document.querySelectorAll('.post-card');
-    
-    filterButtons.forEach(button => {
-      button.addEventListener('click', function() {
-        const filter = this.dataset.filter;
-        
-        // Update active button
-        filterButtons.forEach(btn => btn.classList.remove('active'));
-        this.classList.add('active');
-        
-        // Filter posts
-        posts.forEach(post => {
-          let shouldShow = true;
-          
-          switch(filter) {
-            case 'featured':
-              shouldShow = post.dataset.featured === 'true';
-              break;
-            case 'all':
-            default:
-              shouldShow = true;
-              break;
-          }
-          
-          if (shouldShow) {
-            post.style.display = 'block';
-            setTimeout(() => {
-              post.style.opacity = '1';
-              post.style.transform = 'translateY(0)';
-            }, 100);
-          } else {
-            post.style.opacity = '0';
-            post.style.transform = 'translateY(20px)';
-            setTimeout(() => {
-              post.style.display = 'none';
-            }, 300);
-          }
-        });
-        
-        // Add loading animation
-        const postsContainer = document.querySelector('.posts-feed');
-        postsContainer.style.opacity = '0.7';
-        setTimeout(() => {
-          postsContainer.style.opacity = '1';
-        }, 300);
-      });
-    });
-  }
+  initFilterTabs();
   
   // View Toggle (Feed/Grid)
   function initViewToggle() {
@@ -121,93 +69,35 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
   
-  
-  // Show notification toast
-  function showNotification(message) {
-    const notification = document.getElementById('notification');
-    const messageEl = notification.querySelector('.notification-message');
-    
-    if (messageEl) {
-      messageEl.textContent = message;
-    }
-    
-    notification.classList.add('visible');
-    
-    // Hide notification after 3 seconds
-    setTimeout(() => {
-      notification.classList.remove('visible');
-    }, 3000);
-  }
-  
-  // Category filtering from stories
-  function filterPostsByCategory(category) {
-    const posts = document.querySelectorAll('.post-card');
-    
-    posts.forEach(post => {
-      const postCategories = post.dataset.categories || '';
-      const shouldShow = category === 'all' || postCategories.includes(category);
-      
-      if (shouldShow) {
-        post.style.display = 'block';
-        setTimeout(() => {
-          post.style.opacity = '1';
-          post.style.transform = 'translateY(0)';
-        }, 100);
-      } else {
-        post.style.opacity = '0';
-        post.style.transform = 'translateY(20px)';
-        setTimeout(() => {
-          post.style.display = 'none';
-        }, 300);
-      }
-    });
-    
-    // Update filter tabs
+  // Filter Tabs (All Posts / Featured)
+  function initFilterTabs() {
     const filterTabs = document.querySelectorAll('.filter-tab');
-    filterTabs.forEach(tab => tab.classList.remove('active'));
-    document.querySelector('.filter-tab[data-filter="all"]').classList.add('active');
+    const allPostsContainer = document.getElementById('posts-feed');
+    const featuredPostsContainer = document.getElementById('posts-featured');
+    
+    filterTabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        const filter = this.dataset.filter;
+        
+        // Remove active class from all tabs
+        filterTabs.forEach(t => t.classList.remove('active'));
+        // Add active class to clicked tab
+        this.classList.add('active');
+        
+        // Show/hide containers based on filter
+        if (filter === 'featured') {
+          // Show featured posts, hide all posts
+          allPostsContainer.style.display = 'none';
+          featuredPostsContainer.style.display = 'flex';
+        } else {
+          // Show all posts, hide featured posts
+          allPostsContainer.style.display = 'flex';
+          featuredPostsContainer.style.display = 'none';
+        }
+      });
+    });
   }
-  
-  // Helper Functions
-  function showNotification(message) {
-    // Remove existing notification
-    const existing = document.querySelector('.home-v2-notification');
-    if (existing) existing.remove();
-    
-    const notification = document.createElement('div');
-    notification.className = 'home-v2-notification';
-    notification.textContent = message;
-    notification.style.cssText = `
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: var(--home-v2-primary);
-      color: white;
-      padding: 1rem 1.5rem;
-      border-radius: 12px;
-      z-index: 9999;
-      transform: translateX(400px);
-      transition: transform 0.3s ease;
-      box-shadow: 0 4px 12px var(--home-v2-shadow-hover);
-      font-weight: 500;
-    `;
-    
-    document.body.appendChild(notification);
-    
-    // Animate in
-    setTimeout(() => {
-      notification.style.transform = 'translateX(0)';
-    }, 100);
-    
-    // Animate out
-    setTimeout(() => {
-      notification.style.transform = 'translateX(400px)';
-      setTimeout(() => {
-        notification.remove();
-      }, 300);
-    }, 3000);
-  }
-  
+
   // Add animations and transitions
   const style = document.createElement('style');
   style.textContent = `
