@@ -99,6 +99,11 @@ homepage:
     enabled: true
     title: "Latest Articles"
     excerpt_length: 30
+    
+  # Site statistics widget
+  stats_widget:
+    enabled: true
+    title: "Site Statistics"
 
 # Favicon configuration
 favicon:
@@ -118,6 +123,9 @@ navigation:
   - title: Home
     url: /
     icon: home # Feather icon name
+  - title: V2
+    url: /v2
+    icon: code
   - title: Documentation
     url: /docs
     icon: book-open

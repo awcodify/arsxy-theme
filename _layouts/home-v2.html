@@ -1,0 +1,337 @@
+---
+layout: default
+---
+
+<div class="home-v2">
+  <!-- Stories-style Category Navigation -->
+  <section class="stories-section">
+    <div class="stories-container">
+      <a href="{{ '/' | relative_url }}" class="story-item active" data-category="all">
+        <div class="story-avatar">
+          <div class="avatar-ring">
+            <div class="story-placeholder">
+              <img src="{{ '/assets/images/icons/default-category.svg' | relative_url }}" 
+                   alt="All Categories" 
+                   style="width: 100%; height: 100%; object-fit: cover;" />
+            </div>
+          </div>
+        </div>
+        <span class="story-label">All</span>
+      </a>
+      
+      {% assign categories_list = site.categories %}
+      {% for category in categories_list limit:8 %}
+        {% comment %}Find the most recent post with an image in this category{% endcomment %}
+        {% assign category_posts = category[1] | where_exp: "post", "post.image" %}
+        {% assign latest_post = category_posts | first %}
+        {% assign category_slug = category[0] | slugify %}
+        
+        <a href="{{ '/categories/#' | append: category_slug | relative_url }}" class="story-item" data-category="{{ category_slug }}">
+          <div class="story-avatar">
+            <div class="avatar-ring">
+              {% if latest_post.image %}
+                <img src="{{ '/assets/images/' | append: latest_post.image | relative_url }}" 
+                     alt="{{ category[0] }}" 
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+              {% else %}
+                <img src="{{ '/assets/images/categories/' | append: category_slug | append: '.jpg' | relative_url }}" 
+                     alt="{{ category[0] }}" 
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+              {% endif %}
+              <div class="story-placeholder" style="display: none;">
+                <img src="{{ '/assets/images/icons/default-category.svg' | relative_url }}" 
+                     alt="{{ category[0] }} category" 
+                     style="width: 100%; height: 100%; object-fit: cover;" />
+              </div>
+            </div>
+          </div>
+          <span class="story-label">{{ category[0] }}</span>
+        </a>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Main Feed Container -->
+  <div class="feed-container">
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Filter and View Controls -->
+      <div class="feed-controls">
+        <div class="filter-tabs">
+          <button class="filter-tab active" data-filter="all">All Posts</button>
+          <button class="filter-tab" data-filter="featured">Featured</button>
+        </div>
+        <div class="view-toggles">
+          <button class="view-toggle active" data-view="feed" title="Feed View">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
+            </svg>
+          </button>
+          <button class="view-toggle" data-view="grid" title="Grid View">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M4 11h5V5H4v6zm0 7h5v-6H4v6zm6 0h5v-6h-5v6zm6 0h5v-6h-5v6zm-6-7h5V5h-5v6zm6-6v6h5V5h-5z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Posts Feed -->
+      {% if paginator %}
+      {% assign posts_to_show = paginator.posts %}
+      {% else %}
+      {% assign posts_to_show = site.posts %}
+      {% endif %}
+      {% include post-feed-v2.html posts=posts_to_show %}
+
+      <!-- Fetured Posts Section -->
+      {% assign posts_to_show = site.posts | where: "featured", true %}
+      {% include post-feed-v2.html posts=posts_to_show id="posts-featured" display="none" %}
+
+      <!-- Pagination Navigation -->
+      {% if paginator %}
+      <div class="pagination-container">
+        <nav class="pagination" aria-label="Pagination Navigation">
+          {% if paginator.previous_page %}
+            <a href="{{ paginator.previous_page_path | relative_url }}" class="pagination-btn prev-btn" aria-label="Previous page">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15,18 9,12 15,6"></polyline>
+              </svg>
+              <span>Previous</span>
+            </a>
+          {% else %}
+            <span class="pagination-btn prev-btn disabled" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15,18 9,12 15,6"></polyline>
+              </svg>
+              <span>Previous</span>
+            </span>
+          {% endif %}
+
+          <div class="pagination-pages">
+            {% for page in (1..paginator.total_pages) %}
+              {% if page == paginator.page %}
+                <span class="pagination-page current" aria-current="page">{{ page }}</span>
+              {% elsif page == 1 %}
+                <a href="{{ '/' | relative_url }}" class="pagination-page" aria-label="Page {{ page }}">{{ page }}</a>
+              {% else %}
+                <a href="{{ site.paginate_path | replace: ':num', page | relative_url }}" class="pagination-page" aria-label="Page {{ page }}">{{ page }}</a>
+              {% endif %}
+            {% endfor %}
+          </div>
+
+          {% if paginator.next_page %}
+            <a href="{{ paginator.next_page_path | relative_url }}" class="pagination-btn next-btn" aria-label="Next page">
+              <span>Next</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9,18 15,12 9,6"></polyline>
+              </svg>
+            </a>
+          {% else %}
+            <span class="pagination-btn next-btn disabled" aria-hidden="true">
+              <span>Next</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9,18 15,12 9,6"></polyline>
+              </svg>
+            </span>
+          {% endif %}
+        </nav>
+
+        <div class="pagination-info">
+          <span>Page {{ paginator.page }} of {{ paginator.total_pages }}</span>
+          <span class="pagination-separator">•</span>
+          <span>{{ paginator.posts.size }} of {{ paginator.total_posts }} posts</span>
+        </div>
+      </div>
+      {% endif %}
+    </main>
+
+    <!-- Sidebar -->
+    <aside class="social-sidebar">
+    <!-- Profile Card -->
+    <div class="profile-card">
+      <div class="profile-avatar">
+        <img src="{{ site.author_avatar | relative_url }}" 
+             alt="{{ site.homepage.about_widget.title | default: site.author | default: site.title }}"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="avatar-placeholder" style="display: none;">
+          {{ site.homepage.about_widget.title | default: site.author | default: site.title | slice: 0 | upcase }}
+        </div>
+      </div>
+      <div class="profile-info">
+        <h3 class="profile-name">{{ site.homepage.about_widget.title | default: site.author | default: site.title }}</h3>
+        <p class="profile-bio">{{ site.homepage.about_widget.content | default: site.description | truncatewords: 15 }}</p>
+        {% if site.homepage.about_widget.enabled and site.homepage.about_widget.link_url %}
+        <a href="{{ site.homepage.about_widget.link_url | relative_url }}" class="profile-link">{{ site.homepage.about_widget.link_text | default: "Learn more →" }}</a>
+        {% endif %}
+        <div class="profile-stats">
+          <div class="stat">
+            <span class="stat-number">{{ site.posts.size }}</span>
+            <span class="stat-label">Posts</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">{{ site.categories.size }}</span>
+            <span class="stat-label">Categories</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- All Categories -->
+    <div class="sidebar-widget trending-widget">
+      <h3 class="widget-title">All Categories</h3>
+      <div class="trending-list">
+        {% comment %}Create sortable category data{% endcomment %}
+        {% assign category_list = "" | split: "" %}
+        {% for category in site.categories %}
+          {% assign post_count = category[1].size %}
+          {% assign padded_count = post_count %}
+          {% if post_count < 10 %}
+            {% assign padded_count = "0" | append: post_count %}
+          {% endif %}
+          {% assign category_data = padded_count | append: "|" | append: category[0] %}
+          {% assign category_list = category_list | push: category_data %}
+        {% endfor %}
+        {% assign sorted_categories = category_list | sort | reverse %}
+        
+        {% assign category_counter = 0 %}
+        {% for category_item in sorted_categories %}
+          {% assign category_counter = category_counter | plus: 1 %}
+          {% assign parts = category_item | split: "|" %}
+          {% assign post_count = parts[0] | plus: 0 %}
+          {% assign category_name = parts[1] | slugify %}
+          <a href="{{ '/categories/#' | append: category_name | relative_url }}" class="trending-item">
+            <span class="trending-number">{{ category_counter }}</span>
+            <span class="trending-name">{{ category_name }}</span>
+            <span class="trending-count">{{ post_count }} posts</span>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Popular Tags -->
+    <div class="sidebar-widget tags-widget">
+      <h3 class="widget-title">Popular Tags</h3>
+      <div class="tags-cloud">
+        {% comment %}Create sortable tag data{% endcomment %}
+        {% assign tag_list = "" | split: "" %}
+        {% for tag in site.tags %}
+          {% assign post_count = tag[1].size %}
+          {% assign padded_count = post_count %}
+          {% if post_count < 10 %}
+            {% assign padded_count = "0" | append: post_count %}
+          {% endif %}
+          {% assign tag_data = padded_count | append: "|" | append: tag[0] %}
+          {% assign tag_list = tag_list | push: tag_data %}
+        {% endfor %}
+        {% assign sorted_tags = tag_list | sort | reverse %}
+        
+        {% for tag_item in sorted_tags limit:15 %}
+          {% assign parts = tag_item | split: "|" %}
+          {% assign post_count = parts[0] | plus: 0 %}
+          {% assign tag_name = parts[1] | slugify %}
+          {% assign tag_display = parts[1] %}
+          <a href="{{ '/tags/#' | append: tag_name | relative_url }}" class="tag-item">
+            <span class="tag-hash">#</span>{{ tag_display }}
+            <span class="tag-count">{{ post_count }}</span>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Site Statistics -->
+    {% if site.homepage.stats_widget.enabled %}
+    <div class="sidebar-widget stats-widget">
+      <h3 class="widget-title">{{ site.homepage.stats_widget.title | default: "Site Statistics" }}</h3>
+      <div class="stats-grid">
+        {% comment %}Calculate total words{% endcomment %}
+        {% assign total_words = 0 %}
+        {% assign total_reading_time = 0 %}
+        {% for post in site.posts %}
+          {% assign words = post.content | strip_html | number_of_words %}
+          {% assign total_words = total_words | plus: words %}
+          {% assign reading_time = words | divided_by: 200 | plus: 1 %}
+          {% assign total_reading_time = total_reading_time | plus: reading_time %}
+        {% endfor %}
+        
+        {% comment %}Calculate site age{% endcomment %}
+        {% assign first_post = site.posts | last %}
+        {% assign first_date = first_post.date | date: "%s" %}
+        {% assign current_date = site.time | date: "%s" %}
+        {% assign days_active = current_date | minus: first_date | divided_by: 86400 %}
+        
+        <div class="stat-item">
+          <div class="stat-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14,2 14,8 20,8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10,9 9,9 8,9"></polyline>
+            </svg>
+          </div>
+          <div class="stat-details">
+            <span class="stat-number">{{ total_words | divided_by: 1000 }}K</span>
+            <span class="stat-label">Words Published</span>
+          </div>
+        </div>
+        
+        <div class="stat-item">
+          <div class="stat-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12,6 12,12 16,14"></polyline>
+            </svg>
+          </div>
+          <div class="stat-details">
+            <span class="stat-number">{{ total_reading_time }}</span>
+            <span class="stat-label">Minutes to Read All</span>
+          </div>
+        </div>
+        
+        <div class="stat-item">
+          <div class="stat-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+          </div>
+          <div class="stat-details">
+            <span class="stat-number">{{ days_active }}</span>
+            <span class="stat-label">Days Active</span>
+          </div>
+        </div>
+        
+        <div class="stat-item">
+          <div class="stat-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"></polyline>
+            </svg>
+          </div>
+          <div class="stat-details">
+            <span class="stat-number">{{ total_words | divided_by: site.posts.size | round }}</span>
+            <span class="stat-label">Avg Words per Post</span>
+          </div>
+        </div>
+        
+        <div class="stat-item">
+          <div class="stat-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 11H5a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h4l3 3h4a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-4l-3 3z"></path>
+              <path d="M22 9l-10 8"></path>
+              <path d="M12 17l10-8"></path>
+            </svg>
+          </div>
+          <div class="stat-details">
+            <span class="stat-number">{{ first_post.date | date: "%b %Y" }}</span>
+            <span class="stat-label">First Post</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    </aside>
+  </div>
+ 
+</div>

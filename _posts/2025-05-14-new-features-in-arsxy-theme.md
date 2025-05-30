@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "New Features in Arsxy Theme: Related Posts, Social Sharing, and Search"
-categories: [features, updates]
+categories: [Features, updates]
 tags: [related-posts, search, social-sharing, jekyll, theme]
 description: "Explore the newest features added to Arsxy Theme: intelligent related posts suggestions, social sharing buttons for enhanced content distribution, and a powerful search functionality."
 image: "new-features-update.svg"
