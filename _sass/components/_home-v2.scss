@@ -301,23 +301,30 @@ html.dark-mode {
               }
               
               .share-menu {
-                right: 0;
-                left: auto;
+                left: 50%;
+                right: auto;
                 top: auto;
-                bottom: calc(100% + 10px);
-                transform: translateY(10px);
+                bottom: calc(100% + 5px);
+                transform: translateX(-50%) translateY(10px);
                 width: 240px;
                 min-width: 100px;
                 flex-wrap: wrap;
                 
+                /* Grid-specific bridge */
+                &::before {
+                  left: 0;
+                  right: 0;
+                  width: 100%;
+                }
+                
                 &.visible {
-                  transform: translateY(0);
+                  transform: translateX(-50%) translateY(0);
                 }
                 
                 &::after {
-                  left: auto;
-                  right: 20px;
-                  margin-left: 0;
+                  left: 50%;
+                  right: auto;
+                  margin-left: -6px;
                 }
                 
                 .share-option {
@@ -602,19 +609,27 @@ html.dark-mode {
               
               .grid-view & {
                 width: 220px;
-                left: auto;
-                right: 0;
-                transform: translateY(10px);
+                left: 50%;
+                right: auto;
+                bottom: calc(100% + 5px);
+                transform: translateX(-50%) translateY(10px);
                 flex-wrap: wrap;
                 
+                /* Grid view specific bridge */
+                &::before {
+                  left: 0;
+                  right: 0;
+                  width: 100%;
+                }
+                
                 &.visible, &:hover {
-                  transform: translateY(0);
+                  transform: translateX(-50%) translateY(0);
                 }
                 
                 &::after {
-                  left: auto;
-                  right: 20px;
-                  margin-left: 0;
+                  left: 50%;
+                  right: auto;
+                  margin-left: -6px;
                 }
               }
               
@@ -626,7 +641,7 @@ html.dark-mode {
                 transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s;
                 
                 .grid-view & {
-                  transform: translateY(0);
+                  transform: translateX(-50%) translateY(0);
                 }
               }
               
@@ -701,7 +716,7 @@ html.dark-mode {
               }
               
               .grid-view & {
-                transform: translateY(0);
+                transform: translateX(-50%) translateY(0);
               }
             }
             
@@ -716,6 +731,10 @@ html.dark-mode {
               /* Make bridge visible when menu is shown */
               &::before {
                 pointer-events: auto;
+              }
+              
+              .grid-view & {
+                transform: translateX(-50%) translateY(0);
               }
             }
           }
