@@ -3,28 +3,28 @@
 
 // Define CSS custom properties for theme support
 :root {
-  --home-v2-bg: #fafafa;
-  --home-v2-card-bg: #ffffff;
-  --home-v2-text: #1f2937;
-  --home-v2-text-muted: #6b7280;
-  --home-v2-border: #e2e8f0;
-  --home-v2-hover: #f3f4f6;
-  --home-v2-primary: #3b82f6;
-  --home-v2-accent: #8b5cf6;
-  --home-v2-success: #10b981;
-  --home-v2-warning: #f59e0b;
+  --home-v2-bg: #{d$background-color};
+  --home-v2-card-bg: #{darken($background-color, 1%)};
+  --home-v2-text: #{$text-color};
+  --home-v2-text-muted: #{$dark-gray};
+  --home-v2-border: #{$border-color};
+  --home-v2-hover: #{$light-gray};
+  --home-v2-primary: #{$primary-color};
+  --home-v2-accent: #{$accent-color};
+  --home-v2-success: #{$success-color};
+  --home-v2-warning: #{$warning-color};
   --home-v2-shadow: rgba(0, 0, 0, 0.1);
   --home-v2-shadow-hover: rgba(0, 0, 0, 0.15);
 }
 
 // Dark theme support - use class-based dark mode instead of media query
 html.dark-mode {
-  --home-v2-bg: #0f172a;
-  --home-v2-card-bg: #1e293b;
-  --home-v2-text: #f8fafc;
-  --home-v2-text-muted: #94a3b8;
-  --home-v2-border: #334155;
-  --home-v2-hover: #334155;
+  --home-v2-bg: #{$dark-background};
+  --home-v2-card-bg: #{$dark-surface};
+  --home-v2-text: #{$dark-text-color};
+  --home-v2-text-muted: #{$dark-gray-light};
+  --home-v2-border: #{$dark-border-color};
+  --home-v2-hover: #{$dark-border-color};
   --home-v2-shadow: rgba(0, 0, 0, 0.3);
   --home-v2-shadow-hover: rgba(0, 0, 0, 0.4);
 }
