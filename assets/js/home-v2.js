@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
   initStoriesNavigation();
   initPostFiltering();
   initViewToggle();
-  initShareActions();
   initLoadMore();
   
   // Stories Navigation
@@ -131,60 +130,22 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // Share Actions
-  function initShareActions() {
-    // Share dropdown functionality
-    const shareDropdowns = document.querySelectorAll('.share-dropdown');
+  
+  // Show notification toast
+  function showNotification(message) {
+    const notification = document.getElementById('notification');
+    const messageEl = notification.querySelector('.notification-message');
     
-    shareDropdowns.forEach(dropdown => {
-      const shareBtn = dropdown.querySelector('.share-btn');
-      const shareMenu = dropdown.querySelector('.share-menu');
-      
-      shareBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        // Close other dropdowns
-        shareDropdowns.forEach(other => {
-          if (other !== dropdown) {
-            other.querySelector('.share-menu').style.display = 'none';
-          }
-        });
-        
-        // Toggle current dropdown
-        const isVisible = shareMenu.style.display === 'block';
-        shareMenu.style.display = isVisible ? 'none' : 'block';
-        
-        // Animate share button
-        shareBtn.style.transform = 'scale(1.1) rotate(15deg)';
-        setTimeout(() => {
-          shareBtn.style.transform = 'scale(1) rotate(0deg)';
-        }, 200);
-      });
-    });
+    if (messageEl) {
+      messageEl.textContent = message;
+    }
     
-    // Copy link functionality
-    document.addEventListener('click', function(e) {
-      if (e.target.textContent === 'Copy Link') {
-        const post = e.target.closest('.post-card');
-        const postUrl = post.querySelector('.post-title a').href;
-        
-        navigator.clipboard.writeText(postUrl).then(() => {
-          showNotification('Link copied to clipboard!');
-          // Close the dropdown
-          e.target.closest('.share-menu').style.display = 'none';
-        });
-      }
-    });
+    notification.classList.add('visible');
     
-    // Close dropdowns when clicking outside
-    document.addEventListener('click', function(e) {
-      if (!e.target.closest('.share-dropdown')) {
-        document.querySelectorAll('.share-menu').forEach(menu => {
-          menu.style.display = 'none';
-        });
-      }
-    });
+    // Hide notification after 3 seconds
+    setTimeout(() => {
+      notification.classList.remove('visible');
+    }, 3000);
   }
   
   // Category filtering from stories
@@ -308,10 +269,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     .action-btn:hover {
       transform: translateY(-1px);
-    }
-    
-    .share-menu {
-      transition: opacity 0.2s ease, transform 0.2s ease;
     }
     
     .load-icon {

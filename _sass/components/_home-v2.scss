@@ -303,7 +303,28 @@ html.dark-mode {
               .share-menu {
                 right: 0;
                 left: auto;
+                top: auto;
+                bottom: calc(100% + 10px);
+                transform: translateY(10px);
+                width: 240px;
                 min-width: 100px;
+                flex-wrap: wrap;
+                
+                &.visible {
+                  transform: translateY(0);
+                }
+                
+                &::after {
+                  left: auto;
+                  right: 20px;
+                  margin-left: 0;
+                }
+                
+                .share-option {
+                  width: 48px;
+                  padding: 0.4rem;
+                  font-size: 0.65rem;
+                }
               }
             }
           }
@@ -320,7 +341,7 @@ html.dark-mode {
       background: var(--home-v2-card-bg);
       border: 1px solid var(--home-v2-border);
       border-radius: 16px;
-      overflow: hidden;
+      overflow: visible;
       transition: all 0.3s ease;
       box-shadow: 0 1px 3px var(--home-v2-shadow);
       
@@ -507,39 +528,162 @@ html.dark-mode {
             
             .share-menu {
               position: absolute;
-              top: 100%;
-              right: 0;
+              bottom: calc(100% + 10px);
+              left: 50%;
+              transform: translateX(-50%) translateY(10px);
               background: var(--home-v2-card-bg);
               border: 1px solid var(--home-v2-border);
-              border-radius: 8px;
+              border-radius: 12px;
               padding: 0.5rem;
-              box-shadow: 0 4px 12px var(--home-v2-shadow-hover);
-              display: none;
-              min-width: 120px;
-              z-index: 10;
+              box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+              z-index: 9999; /* Ensure high z-index to prevent blocking */
+              opacity: 0;
+              visibility: hidden;
+              pointer-events: none; /* Prevent click-through when hidden */
+              transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s 0.2s;
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              justify-content: center;
+              gap: 0.5rem;
+              flex-wrap: wrap;
+              width: 280px;
+              max-width: calc(100vw - 40px);
+              /* Safari compatibility fixes */
+              -webkit-backface-visibility: hidden;
+              backface-visibility: hidden;
+              -webkit-transform-style: preserve-3d;
+              transform-style: preserve-3d;
+              
+              /* Mobile responsiveness enhancement */
+              @media (max-width: 767px) {
+                width: 240px;
+                padding: 0.4rem;
+                
+                .share-option {
+                  width: 55px;
+                  padding: 0.5rem;
+                  font-size: 0.65rem;
+                }
+              }
+              
+              @media (max-width: 480px) {
+                width: 220px;
+                
+                .share-option {
+                  width: 45px;
+                  padding: 0.4rem;
+                  font-size: 0.6rem;
+                }
+              }
+              
+              .grid-view & {
+                width: 220px;
+                left: auto;
+                right: 0;
+                transform: translateY(10px);
+                flex-wrap: wrap;
+                
+                &.visible, &:hover {
+                  transform: translateY(0);
+                }
+                
+                &::after {
+                  left: auto;
+                  right: 20px;
+                  margin-left: 0;
+                }
+              }
+              
+              &.visible {
+                opacity: 1;
+                visibility: visible;
+                pointer-events: auto;
+                transform: translateX(-50%) translateY(0);
+                transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s;
+                
+                .grid-view & {
+                  transform: translateY(0);
+                }
+              }
+              
+              &::after {
+                content: '';
+                position: absolute;
+                bottom: -6px;
+                left: 50%;
+                margin-left: -6px;
+                width: 12px;
+                height: 12px;
+                background: var(--home-v2-card-bg);
+                transform: rotate(45deg);
+                border-right: 1px solid var(--home-v2-border);
+                border-bottom: 1px solid var(--home-v2-border);
+              }
               
               .share-option {
-                display: block;
-                padding: 0.5rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 5px;
+                padding: 0.75rem;
                 color: var(--home-v2-text);
                 text-decoration: none;
-                border-radius: 4px;
-                font-size: 0.85rem;
+                border-radius: 8px;
+                font-size: 0.8rem;
+                font-weight: 500;
                 border: none;
                 background: none;
                 cursor: pointer;
-                width: 100%;
-                text-align: left;
-                transition: background-color 0.3s ease;
+                text-align: center;
+                transition: all 0.2s ease;
+                width: 70px;
+                outline: none; /* Remove default outline */
                 
-                &:hover {
+                &:hover, &:focus {
                   background: var(--home-v2-hover);
+                  transform: translateY(-2px);
+                  outline: none;
+                  
+                  svg {
+                    color: var(--home-v2-primary);
+                    transform: scale(1.1);
+                  }
+                }
+                
+                /* Add custom focus style for keyboard navigation */
+                &:focus-visible {
+                  box-shadow: 0 0 0 2px var(--home-v2-primary);
+                  outline: none;
+                }
+                
+                svg {
+                  width: 20px;
+                  height: 20px;
+                  transition: all 0.2s ease;
                 }
               }
             }
             
-            &:hover .share-menu {
-              display: block;
+            &:hover .share-menu, .share-menu:hover, .share-menu:focus-within {
+              opacity: 1;
+              visibility: visible;
+              pointer-events: auto;
+              transform: translateX(-50%) translateY(0);
+              transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s;
+              
+              .grid-view & {
+                transform: translateY(0);
+              }
+            }
+            
+            /* Add focus state for better accessibility */
+            &:focus-within .share-menu {
+              opacity: 1;
+              visibility: visible;
+              pointer-events: auto;
+              transform: translateX(-50%) translateY(0);
+              transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s;
             }
           }
         }
@@ -551,6 +695,39 @@ html.dark-mode {
           color: var(--home-v2-text-muted);
         }
       }
+    }
+  }
+  
+  // Notification Toast
+  .notification-toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--home-v2-success);
+    color: white;
+    padding: 0.75rem 1.25rem;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s 0.3s;
+    
+    &.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, -10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    
+    svg {
+      width: 16px;
+      height: 16px;
+      margin-right: 8px;
+      vertical-align: middle;
     }
   }
   
@@ -798,6 +975,9 @@ html.dark-mode {
 // Responsive Design
 @media (max-width: 768px) {
   .home-v2 {
+    .reading-time {
+      visibility: hidden;
+    }
     .stories-section {
       .stories-container {
         padding: 0 0.5rem;
@@ -894,6 +1074,35 @@ html.dark-mode {
           .action-buttons {
             justify-content: center;
             flex-wrap: wrap;
+            
+            .share-dropdown {
+              .share-menu {
+                width: 280px;
+                max-width: calc(100vw - 30px);
+                left: 50% !important;
+                right: auto !important;
+                transform: translateX(-50%) translateY(10px);
+                flex-wrap: wrap;
+                justify-content: center;
+                
+                &.visible, &:hover {
+                  transform: translateX(-50%) translateY(0);
+                }
+                
+                &::after {
+                  left: 50% !important;
+                  right: auto !important;
+                  margin-left: -6px;
+                }
+                
+                .share-option {
+                  width: 54px;
+                  padding: 0.5rem;
+                  font-size: 0.7rem;
+                  margin-bottom: 3px;
+                }
+              }
+            }
           }
           
           .post-meta-info {
