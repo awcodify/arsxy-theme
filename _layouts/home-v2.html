@@ -76,8 +76,12 @@ layout: default
 
       <!-- Posts Feed -->
       <div class="posts-feed" id="posts-feed">
-      {% assign posts_to_show = paginator.posts | default: site.posts %}
-      {% for post in posts_to_show limit:15 %}
+      {% if paginator %}
+        {% assign posts_to_show = paginator.posts %}
+      {% else %}
+        {% assign posts_to_show = site.posts %}
+      {% endif %}
+      {% for post in posts_to_show %}
         <article class="post-card" 
                  data-categories="{% for cat in post.categories %}{{ cat | slugify }} {% endfor %}"
                  data-featured="{% if post.featured %}true{% else %}false{% endif %}"
@@ -240,16 +244,62 @@ layout: default
       {% endfor %}
       </div>
 
-      <!-- Load More Button -->
-      <div class="load-more-container">
-        <button class="load-more-btn" id="loadMoreBtn">
-          <span class="load-text">Load More Posts</span>
-          <svg class="load-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"/>
-            <polyline points="8,12 12,16 16,12"/>
-          </svg>
-        </button>
+      <!-- Pagination Navigation -->
+      {% if paginator %}
+      <div class="pagination-container">
+        <nav class="pagination" aria-label="Pagination Navigation">
+          {% if paginator.previous_page %}
+            <a href="{{ paginator.previous_page_path | relative_url }}" class="pagination-btn prev-btn" aria-label="Previous page">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15,18 9,12 15,6"></polyline>
+              </svg>
+              <span>Previous</span>
+            </a>
+          {% else %}
+            <span class="pagination-btn prev-btn disabled" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15,18 9,12 15,6"></polyline>
+              </svg>
+              <span>Previous</span>
+            </span>
+          {% endif %}
+
+          <div class="pagination-pages">
+            {% for page in (1..paginator.total_pages) %}
+              {% if page == paginator.page %}
+                <span class="pagination-page current" aria-current="page">{{ page }}</span>
+              {% elsif page == 1 %}
+                <a href="{{ '/' | relative_url }}" class="pagination-page" aria-label="Page {{ page }}">{{ page }}</a>
+              {% else %}
+                <a href="{{ site.paginate_path | replace: ':num', page | relative_url }}" class="pagination-page" aria-label="Page {{ page }}">{{ page }}</a>
+              {% endif %}
+            {% endfor %}
+          </div>
+
+          {% if paginator.next_page %}
+            <a href="{{ paginator.next_page_path | relative_url }}" class="pagination-btn next-btn" aria-label="Next page">
+              <span>Next</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9,18 15,12 9,6"></polyline>
+              </svg>
+            </a>
+          {% else %}
+            <span class="pagination-btn next-btn disabled" aria-hidden="true">
+              <span>Next</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9,18 15,12 9,6"></polyline>
+              </svg>
+            </span>
+          {% endif %}
+        </nav>
+
+        <div class="pagination-info">
+          <span>Page {{ paginator.page }} of {{ paginator.total_pages }}</span>
+          <span class="pagination-separator">•</span>
+          <span>{{ paginator.posts.size }} of {{ paginator.total_posts }} posts</span>
+        </div>
       </div>
+      {% endif %}
     </main>
 
     <!-- Sidebar -->
@@ -257,7 +307,7 @@ layout: default
     <!-- Profile Card -->
     <div class="profile-card">
       <div class="profile-avatar">
-        <img src="{{ site.author_avatar | default: '/assets/images/author.jpg' | relative_url }}" 
+        <img src="{{ site.author_avatar | relative_url }}" 
              alt="{{ site.author | default: site.title }}"
              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
         <div class="avatar-placeholder" style="display: none;">

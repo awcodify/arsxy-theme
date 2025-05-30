@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
   initStoriesNavigation();
   initPostFiltering();
   initViewToggle();
-  initLoadMore();
   
   // Stories Navigation
   function initStoriesNavigation() {
@@ -195,35 +194,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const filterTabs = document.querySelectorAll('.filter-tab');
     filterTabs.forEach(tab => tab.classList.remove('active'));
     document.querySelector('.filter-tab[data-filter="all"]').classList.add('active');
-  }
-  
-  // Load More functionality
-  function initLoadMore() {
-    const loadMoreBtn = document.querySelector('.load-more-btn');
-    const postsContainer = document.querySelector('.posts-feed');
-    
-    if (!loadMoreBtn) return;
-    
-    loadMoreBtn.addEventListener('click', function() {
-      // Show loading state
-      const loadText = this.querySelector('.load-text');
-      const loadIcon = this.querySelector('.load-icon');
-      
-      loadText.textContent = 'Loading...';
-      loadIcon.style.animation = 'spin 1s linear infinite';
-      this.disabled = true;
-      
-      // Simulate loading more posts (in a real implementation, you'd fetch from server)
-      setTimeout(() => {
-        // Reset button
-        loadText.textContent = 'Load More Posts';
-        loadIcon.style.animation = '';
-        this.disabled = false;
-        
-        // In a real implementation, you would append new posts here
-        showNotification('All posts loaded!');
-      }, 2000);
-    });
   }
   
   // Helper Functions
