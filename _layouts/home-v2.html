@@ -198,38 +198,14 @@ layout: default
           {% assign category_counter = category_counter | plus: 1 %}
           {% assign parts = category_item | split: "|" %}
           {% assign post_count = parts[0] | plus: 0 %}
-          {% assign category_name = parts[1] %}
-          <a href="{{ '/categories/#' | append: category_name | slugify | relative_url }}" class="trending-item">
+          {% assign category_name = parts[1] | slugify %}
+          <a href="{{ '/categories/#' | append: category_name | relative_url }}" class="trending-item">
             <span class="trending-number">{{ category_counter }}</span>
             <span class="trending-name">{{ category_name }}</span>
             <span class="trending-count">{{ post_count }} posts</span>
           </a>
         {% endfor %}
       </div>
-    </div>
-
-    <!-- Suggested Categories -->
-    <div class="sidebar-widget categories-widget">
-      <h3 class="widget-title">Explore Categories</h3>
-      <div class="categories-grid">
-        {% for category in site.categories limit:6 %}
-          <a href="{{ '/categories/#' | append: category[0] | slugify | relative_url }}" class="category-chip">
-            <span class="category-name">{{ category[0] }}</span>
-            <span class="category-count">{{ category[1].size }}</span>
-          </a>
-        {% endfor %}
-      </div>
-    </div>
-
-    <!-- Quick Links -->
-    <div class="sidebar-widget quick-links-widget">
-      <h3 class="widget-title">Quick Links</h3>
-      <ul class="quick-links">
-        <li><a href="{{ '/about/' | relative_url }}">About</a></li>
-        <li><a href="{{ '/contact/' | relative_url }}">Contact</a></li>
-        <li><a href="{{ '/search/' | relative_url }}">Search</a></li>
-        <li><a href="{{ '/feed.xml' | relative_url }}">RSS Feed</a></li>
-      </ul>
     </div>
     </aside>
   </div>
