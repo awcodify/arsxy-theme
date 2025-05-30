@@ -237,6 +237,113 @@ layout: default
         {% endfor %}
       </div>
     </div>
+
+    <!-- Site Statistics -->
+    {% if site.homepage.stats_widget.enabled %}
+    <div class="sidebar-widget stats-widget">
+      <h3 class="widget-title">{{ site.homepage.stats_widget.title | default: "Site Statistics" }}</h3>
+      <div class="stats-grid">
+        {% comment %}Calculate total words{% endcomment %}
+        {% assign total_words = 0 %}
+        {% assign total_reading_time = 0 %}
+        {% for post in site.posts %}
+          {% assign words = post.content | strip_html | number_of_words %}
+          {% assign total_words = total_words | plus: words %}
+          {% assign reading_time = words | divided_by: 200 | plus: 1 %}
+          {% assign total_reading_time = total_reading_time | plus: reading_time %}
+        {% endfor %}
+        
+        {% comment %}Calculate site age{% endcomment %}
+        {% assign first_post = site.posts | last %}
+        {% assign first_date = first_post.date | date: "%s" %}
+        {% assign current_date = site.time | date: "%s" %}
+        {% assign days_active = current_date | minus: first_date | divided_by: 86400 %}
+        
+        <div class="stat-item">
+          <div class="stat-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14,2 14,8 20,8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10,9 9,9 8,9"></polyline>
+            </svg>
+          </div>
+          <div class="stat-details">
+            <span class="stat-number">{{ total_words | divided_by: 1000 }}K</span>
+            <span class="stat-label">Words Published</span>
+          </div>
+        </div>
+        
+        <div class="stat-item">
+          <div class="stat-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12,6 12,12 16,14"></polyline>
+            </svg>
+          </div>
+          <div class="stat-details">
+            <span class="stat-number">{{ total_reading_time }}</span>
+            <span class="stat-label">Minutes to Read All</span>
+          </div>
+        </div>
+        
+        <div class="stat-item">
+          <div class="stat-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+          </div>
+          <div class="stat-details">
+            <span class="stat-number">{{ days_active }}</span>
+            <span class="stat-label">Days Active</span>
+          </div>
+        </div>
+        
+        <div class="stat-item">
+          <div class="stat-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <div class="stat-details">
+            <span class="stat-number">{{ site.posts.size | divided_by: days_active | times: 30 | round }}</span>
+            <span class="stat-label">Posts per Month</span>
+          </div>
+        </div>
+        
+        <div class="stat-item">
+          <div class="stat-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"></polyline>
+            </svg>
+          </div>
+          <div class="stat-details">
+            <span class="stat-number">{{ total_words | divided_by: site.posts.size | round }}</span>
+            <span class="stat-label">Avg Words per Post</span>
+          </div>
+        </div>
+        
+        <div class="stat-item">
+          <div class="stat-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 11H5a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h4l3 3h4a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-4l-3 3z"></path>
+              <path d="M22 9l-10 8"></path>
+              <path d="M12 17l10-8"></path>
+            </svg>
+          </div>
+          <div class="stat-details">
+            <span class="stat-number">{{ first_post.date | date: "%b %Y" }}</span>
+            <span class="stat-label">First Post</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
     </aside>
   </div>
  
