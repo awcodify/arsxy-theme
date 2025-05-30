@@ -1027,7 +1027,21 @@ html.dark-mode {
           color: var(--home-v2-text-muted);
           font-size: 0.9rem;
           line-height: 1.4;
-          margin: 0;
+          margin: 0 0 0.75rem 0;
+        }
+        
+        .profile-link {
+          display: inline-block;
+          color: var(--primary-color);
+          text-decoration: none;
+          font-size: 0.85rem;
+          font-weight: 600;
+          transition: color 0.3s ease;
+          
+          &:hover {
+            color: var(--link-hover-color);
+            text-decoration: underline;
+          }
         }
       }
       

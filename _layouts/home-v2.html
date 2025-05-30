@@ -151,15 +151,18 @@ layout: default
     <div class="profile-card">
       <div class="profile-avatar">
         <img src="{{ site.author_avatar | relative_url }}" 
-             alt="{{ site.author | default: site.title }}"
+             alt="{{ site.homepage.about_widget.title | default: site.author | default: site.title }}"
              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
         <div class="avatar-placeholder" style="display: none;">
-          {{ site.author | default: site.title | slice: 0 | upcase }}
+          {{ site.homepage.about_widget.title | default: site.author | default: site.title | slice: 0 | upcase }}
         </div>
       </div>
       <div class="profile-info">
-        <h3 class="profile-name">{{ site.author | default: site.title }}</h3>
-        <p class="profile-bio">{{ site.description | truncatewords: 15 }}</p>
+        <h3 class="profile-name">{{ site.homepage.about_widget.title | default: site.author | default: site.title }}</h3>
+        <p class="profile-bio">{{ site.homepage.about_widget.content | default: site.description | truncatewords: 15 }}</p>
+        {% if site.homepage.about_widget.enabled and site.homepage.about_widget.link_url %}
+        <a href="{{ site.homepage.about_widget.link_url | relative_url }}" class="profile-link">{{ site.homepage.about_widget.link_text | default: "Learn more →" }}</a>
+        {% endif %}
         <div class="profile-stats">
           <div class="stat">
             <span class="stat-number">{{ site.posts.size }}</span>
