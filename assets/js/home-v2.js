@@ -94,40 +94,60 @@ document.addEventListener('DOMContentLoaded', function() {
   function initViewToggle() {
     const viewToggles = document.querySelectorAll('.view-toggle');
     const postsContainer = document.querySelector('.posts-feed');
+    const STORAGE_KEY = 'home-v2-view-mode';
+    
+    // Restore saved view state on page load
+    const savedView = localStorage.getItem(STORAGE_KEY) || 'feed';
+    applyViewStyle(savedView);
+    updateActiveToggle(savedView);
     
     viewToggles.forEach(toggle => {
       toggle.addEventListener('click', function() {
         const view = this.dataset.view;
         
-        // Update active toggle
-        viewToggles.forEach(btn => btn.classList.remove('active'));
-        this.classList.add('active');
+        // Save view preference to localStorage
+        localStorage.setItem(STORAGE_KEY, view);
         
         // Apply view style
-        if (view === 'grid') {
-          postsContainer.classList.add('grid-view');
-          postsContainer.style.display = 'grid';
-          postsContainer.style.gridTemplateColumns = 'repeat(auto-fit, minmax(350px, 1fr))';
-          postsContainer.style.gap = '1.5rem';
-          
-          // Adjust post cards for grid view
-          document.querySelectorAll('.post-card').forEach(card => {
-            card.style.marginBottom = '0';
-          });
-        } else {
-          postsContainer.classList.remove('grid-view');
-          postsContainer.style.display = 'flex';
-          postsContainer.style.flexDirection = 'column';
-          postsContainer.style.gap = '2rem';
-          postsContainer.style.gridTemplateColumns = 'none';
-          
-          // Reset post cards for feed view
-          document.querySelectorAll('.post-card').forEach(card => {
-            card.style.marginBottom = '';
-          });
-        }
+        applyViewStyle(view);
+        updateActiveToggle(view);
       });
     });
+    
+    // Helper function to apply view styles
+    function applyViewStyle(view) {
+      if (view === 'grid') {
+        postsContainer.classList.add('grid-view');
+        postsContainer.style.display = 'grid';
+        postsContainer.style.gridTemplateColumns = 'repeat(auto-fit, minmax(350px, 1fr))';
+        postsContainer.style.gap = '1.5rem';
+        
+        // Adjust post cards for grid view
+        document.querySelectorAll('.post-card').forEach(card => {
+          card.style.marginBottom = '0';
+        });
+      } else {
+        postsContainer.classList.remove('grid-view');
+        postsContainer.style.display = 'flex';
+        postsContainer.style.flexDirection = 'column';
+        postsContainer.style.gap = '2rem';
+        postsContainer.style.gridTemplateColumns = 'none';
+        
+        // Reset post cards for feed view
+        document.querySelectorAll('.post-card').forEach(card => {
+          card.style.marginBottom = '';
+        });
+      }
+    }
+    
+    // Helper function to update active toggle button
+    function updateActiveToggle(view) {
+      viewToggles.forEach(btn => btn.classList.remove('active'));
+      const activeToggle = document.querySelector(`.view-toggle[data-view="${view}"]`);
+      if (activeToggle) {
+        activeToggle.classList.add('active');
+      }
+    }
   }
   
   
