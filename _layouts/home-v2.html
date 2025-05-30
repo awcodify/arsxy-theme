@@ -170,23 +170,39 @@ layout: default
           </div>
           <div class="stat">
             <span class="stat-number">{{ site.categories.size }}</span>
-            <span class="stat-label">Topics</span>
+            <span class="stat-label">Categories</span>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Trending Topics -->
+    <!-- All Categories -->
     <div class="sidebar-widget trending-widget">
-      <h3 class="widget-title">Trending Topics</h3>
+      <h3 class="widget-title">All Categories</h3>
       <div class="trending-list">
+        {% comment %}Create sortable category data{% endcomment %}
+        {% assign category_list = "" | split: "" %}
+        {% for category in site.categories %}
+          {% assign post_count = category[1].size %}
+          {% assign padded_count = post_count %}
+          {% if post_count < 10 %}
+            {% assign padded_count = "0" | append: post_count %}
+          {% endif %}
+          {% assign category_data = padded_count | append: "|" | append: category[0] %}
+          {% assign category_list = category_list | push: category_data %}
+        {% endfor %}
+        {% assign sorted_categories = category_list | sort | reverse %}
+        
         {% assign category_counter = 0 %}
-        {% for category in site.categories limit:5 %}
+        {% for category_item in sorted_categories %}
           {% assign category_counter = category_counter | plus: 1 %}
-          <a href="{{ '/categories/#' | append: category[0] | slugify | relative_url }}" class="trending-item">
+          {% assign parts = category_item | split: "|" %}
+          {% assign post_count = parts[0] | plus: 0 %}
+          {% assign category_name = parts[1] %}
+          <a href="{{ '/categories/#' | append: category_name | slugify | relative_url }}" class="trending-item">
             <span class="trending-number">{{ category_counter }}</span>
-            <span class="trending-name">{{ category[0] }}</span>
-            <span class="trending-count">{{ category[1].size }} posts</span>
+            <span class="trending-name">{{ category_name }}</span>
+            <span class="trending-count">{{ post_count }} posts</span>
           </a>
         {% endfor %}
       </div>
