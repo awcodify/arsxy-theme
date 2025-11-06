@@ -121,10 +121,11 @@
       }
       
       // Remove loading state after theme is applied
-      setTimeout(function() {
+      // Use requestAnimationFrame for reliable timing across devices/browsers
+      requestAnimationFrame(function() {
         html.classList.remove('theme-loading');
         html.classList.add('theme-ready');
-      }, 50); // Short delay to ensure styles are applied
+      });
     })();
   </script>
 </head>
