@@ -1,0 +1,56 @@
+---
+# Critical CSS to prevent FOUC/whitescreen on remote theme usage
+# This file is loaded synchronously before main.css to ensure
+# proper theme colors are applied immediately
+---
+
+@import "variables";
+
+/* Prevent whitescreen flash by setting initial backgrounds */
+html, body {
+  background-color: $background-color;
+  color: $text-color;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  /* Ensure content is visible during loading */
+  opacity: 1;
+}
+
+/* Apply dark mode styles immediately if class is present */
+html.dark-mode, 
+html.dark-mode body {
+  background-color: $dark-background !important;
+  color: $dark-text-color !important;
+}
+
+/* Ensure main content area follows the theme */
+html.dark-mode .site-header {
+  background-color: rgba($dark-surface, 0.95) !important;
+  color: $dark-text-color !important;
+}
+
+html.dark-mode .page-content {
+  background-color: $dark-background !important;
+  color: $dark-text-color !important;
+}
+
+html.dark-mode .wrapper {
+  background-color: transparent !important;
+}
+
+/* Smooth loading state */
+html.theme-loading {
+  opacity: 0.98;
+}
+
+html.theme-ready {
+  opacity: 1;
+}
+
+/* Export color variables for potential JS access */
+:root {
+  --critical-light-bg: #{$background-color};
+  --critical-light-text: #{$text-color};
+  --critical-dark-bg: #{$dark-background};
+  --critical-dark-text: #{$dark-text-color};
+  --critical-dark-surface: #{$dark-surface};
+}
