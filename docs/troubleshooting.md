@@ -49,6 +49,17 @@ This guide covers common issues you might encounter when working with Arsxy Them
 3. Verify that your browser supports localStorage (required for theme persistence)
 4. Make sure your CSS variables for dark mode are correctly defined
 
+### Whitescreen or Flash of Unstyled Content (FOUC)
+
+**Issue**: Page shows white background briefly when loading as remote theme.
+
+**Solution**:
+1. The theme now includes critical CSS (`critical.css`) that loads first to prevent this
+2. If still experiencing issues, ensure `critical.css` is loading before `main.css` in your layout
+3. Check that your `_config.yml` has `remote_theme: awcodify/arsxy-theme` configured correctly
+4. Clear browser cache and try hard refresh
+5. See the [Remote Theme Optimization](/docs/remote-theme-optimization/) guide for detailed information
+
 ## Layout Problems
 
 ### Sidebar Missing or Misaligned
