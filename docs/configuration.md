@@ -178,7 +178,7 @@ seo:
 # Google Analytics
 # Add your Google Analytics 4 (GA4) measurement ID
 # Format: G-XXXXXXXXXX
-google_analytics: G-XXXX     # Your Google Analytics tracking ID
+google_analytics: G-XXXXXXXXXX     # Your Google Analytics tracking ID
 ```
 
 The Google Analytics integration uses the global site tag (gtag.js) and will automatically be included in all pages when you add your measurement ID to `_config.yml`. The tracking script will only load if the `google_analytics` setting is present.
