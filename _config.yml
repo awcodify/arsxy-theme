@@ -162,6 +162,11 @@ social:
   linkedin: # your LinkedIn username
   email: awcodify@gmail.com
 
+# Google Analytics
+# Add your Google Analytics 4 (GA4) measurement ID to enable tracking
+# Format: G-XXXXXXXXXX
+# google_analytics: G-XXXXXXXXXX
+
 # Plugins
 plugins:
   - jekyll-feed
