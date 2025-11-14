@@ -1,5 +1,17 @@
 <input type="checkbox" id="nav-trigger" class="nav-trigger" />
 
+<!-- Mobile Logo (Top) -->
+{% if site.header_logo.enabled %}
+<div class="mobile-top-logo">
+  <a href="{{ "/" | relative_url }}" class="top-logo-link">
+    <img src="{{ site.header_logo.image | relative_url }}" 
+         alt="{{ site.header_logo.alt | default: site.title }}" 
+         class="top-logo-image {% if site.header_logo.dark_mode_class %}{{ site.header_logo.dark_mode_class }}{% else %}inverted{% endif %}" 
+         height="{{ site.header_logo.height | default: 60 }}" />
+  </a>
+</div>
+{% endif %}
+
 <header class="site-header">
   <!-- Elegant accent line at top -->
   <div class="header-accent-line"></div>

@@ -3,6 +3,38 @@
    Elegant, sophisticated, and professional
    ============================================ */
 
+/* Mobile Top Logo */
+.mobile-top-logo {
+  display: none;
+  width: 100%;
+  
+  border-bottom: 1px solid rgba($border-color, 0.6);
+  padding: 8px 16px;
+  
+  /* Show only on mobile */
+  @media screen and (max-width: $on-palm) {
+    display: block;
+  }
+  
+  .top-logo-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    
+    &:hover .top-logo-image {
+      transform: scale(1.05);
+    }
+  }
+  
+  .top-logo-image {
+    max-height: 32px;
+    width: auto;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: none !important;
+  }
+}
+
 .site-header {
   background: linear-gradient(
     135deg,
