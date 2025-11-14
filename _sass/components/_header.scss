@@ -161,6 +161,15 @@
       height: 20px;
       transition: all 0.3s ease;
     }
+    
+    // Desktop: show logo wrapper, hide mobile-only home icon
+    .desktop-only {
+      display: block;
+    }
+    
+    .mobile-only {
+      display: none;
+    }
   }
 }
 
@@ -1048,6 +1057,16 @@
       
       .site-title-text {
         display: none;
+      }
+      
+      // Hide desktop-only elements (logo)
+      .desktop-only {
+        display: none !important;
+      }
+      
+      // Show mobile-only elements (home icon)
+      .mobile-only {
+        display: block !important;
       }
       
       .home-icon {
