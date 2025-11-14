@@ -160,3 +160,28 @@ image: /assets/images/posts/featured-image.jpg
 image_alt: "Detailed description of the image content" # Will fallback to post title if not specified
 ---
 ```
+
+## Seamless Background Effect
+
+Arsxy Theme includes a feature to create a seamless, blurred background effect that matches the featured image. This creates a visually stunning and immersive hero section.
+
+### How It Works
+
+The theme uses a small JavaScript snippet (`assets/js/image-color.js`) along with the ColorThief.js library to:
+
+1.  **Extract the Image URL**: The script gets the URL of the featured image.
+2.  **Apply a Blurred Background**: It then sets a CSS variable (`--hero-image-url`) with the image URL.
+3.  **CSS Styling**: A pseudo-element (`::before`) on the image container uses this variable to create a blurred, full-bleed background that sits behind the main image.
+
+This effect is applied automatically to all posts with a featured image.
+
+### Customization
+
+You can adjust the blur and brightness of the background effect by modifying the CSS in `_sass/components/_post.scss`:
+
+```scss
+.post-hero-image::before {
+  filter: blur(25px) brightness(0.8);
+  // Adjust the blur and brightness values to your liking
+}
+```

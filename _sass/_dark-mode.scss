@@ -960,3 +960,8 @@ body, a, .site-header, .site-nav, .site-footer, .post,
     }
   }
 }
+
+/* Post hero image background in dark mode */
+.post-hero-image {
+  background-color: $dark-surface;
+}

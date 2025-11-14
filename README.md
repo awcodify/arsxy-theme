@@ -26,6 +26,7 @@ A clean, modern Jekyll theme optimized for technical blogs and documentation sit
 - **Reading Time** - Automatic reading time estimation for each post
 - **Featured Posts** - Highlight your best content on the homepage
 - **Categories & Tags** - Organized content structure
+- **Seamless Featured Images** - Dynamically creates a blurred background from the post's featured image for a beautiful, blended effect.
 
 ## Installation
 

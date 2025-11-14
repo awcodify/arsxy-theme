@@ -94,14 +94,10 @@ body {
   font-family: $base-font-family;
   font-size: 1rem;
   line-height: $base-line-height;
-  color: $text-color;
-  background-color: $background-color;
+  color: var(--text-color);
+  background-color: var(--bg-color);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
 }
 
 /* Focus state for accessibility */
