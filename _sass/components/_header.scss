@@ -93,7 +93,7 @@
   z-index: 100;
   
   /* Desktop styles */
-  @media screen and (min-width: $on-palm + 1px) {
+  @media screen and (min-width: #{$on-palm + 1px}) {
     /* Center navigation on larger screens */
     position: absolute;
     left: 50%;
