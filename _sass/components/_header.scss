@@ -1203,9 +1203,10 @@ html.dark-mode {
   }
 }
 
-/* Fallback for prefers-color-scheme */
+/* Fallback for prefers-color-scheme - only applies if user hasn't set explicit preference
+   This prevents system dark mode from overriding user's light mode choice */
 @media (prefers-color-scheme: dark) {
-  .site-header {
+  html:not([data-user-theme]) .site-header {
     background: linear-gradient(
       135deg,
       rgba($dark-background, 0.75) 0%,
@@ -1220,7 +1221,7 @@ html.dark-mode {
       0 4px 16px rgba(0, 0, 0, 0.15);
   }
   
-  .site-nav {
+  html:not([data-user-theme]) .site-nav {
     .nav-link,
     .dropdown-link,
     .submenu-link {
@@ -1254,7 +1255,7 @@ html.dark-mode {
     }
   }
   
-  .header-actions .action-btn {
+  html:not([data-user-theme]) .header-actions .action-btn {
     color: $dark-gray-light;
     
     &:hover {
@@ -1263,7 +1264,7 @@ html.dark-mode {
   }
   
   @media screen and (max-width: $on-palm) {
-    .nav-container {
+    html:not([data-user-theme]) .nav-container {
       background: $dark-background;
       border-left-color: $dark-border-color;
       box-shadow: -4px 0 24px rgba(0, 0, 0, 0.4);
@@ -1278,9 +1279,9 @@ html.dark-mode {
       }
     }
     
-    .nav-container .nav-link,
-    .nav-container .dropdown-link,
-    .nav-container .submenu-link {
+    html:not([data-user-theme]) .nav-container .nav-link,
+    html:not([data-user-theme]) .nav-container .dropdown-link,
+    html:not([data-user-theme]) .nav-container .submenu-link {
       color: $dark-text-color;
       
       &:hover {

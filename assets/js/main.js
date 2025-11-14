@@ -35,6 +35,7 @@ function initDarkMode() {
   // If dark mode is completely disabled, ensure light mode is always applied
   if (!darkModeEnabled) {
     html.classList.remove('dark-mode');
+    html.setAttribute('data-user-theme', 'light');
     localStorage.setItem('theme', 'light');
     showLightModeIcon(themeToggle);
   } else {
@@ -52,6 +53,7 @@ function initDarkMode() {
     // If dark mode is completely disabled, don't allow toggling to dark mode
     if (!darkModeEnabled) {
       html.classList.remove('dark-mode');
+      html.setAttribute('data-user-theme', 'light');
       localStorage.setItem('theme', 'light');
       showLightModeIcon(themeToggle);
       return;
@@ -60,11 +62,13 @@ function initDarkMode() {
     if (html.classList.contains('dark-mode')) {
       html.classList.remove('dark-mode');
       themeToggle.classList.remove('dark-active');
+      html.setAttribute('data-user-theme', 'light');
       localStorage.setItem('theme', 'light');
       showLightModeIcon(themeToggle);
     } else {
       html.classList.add('dark-mode');
       themeToggle.classList.add('dark-active');
+      html.setAttribute('data-user-theme', 'dark');
       localStorage.setItem('theme', 'dark');
       showDarkModeIcon(themeToggle);
     }

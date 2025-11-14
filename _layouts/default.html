@@ -90,6 +90,7 @@
         // If dark mode is disabled in config, force light mode
         // This will override any user preference or OS setting
         html.classList.remove('dark-mode');
+        html.setAttribute('data-user-theme', 'light');
         try {
           localStorage.setItem('theme', 'light');
         } catch (e) {
@@ -114,11 +115,19 @@
           // 1. User explicitly chose dark mode in the past OR
           // 2. No stored preference AND site default is dark
           html.classList.add('dark-mode');
+          // Only set data-user-theme if user has explicitly chosen (not default)
+          if (storedTheme) {
+            html.setAttribute('data-user-theme', 'dark');
+          }
         } else if (storedTheme === 'light' || (!storedTheme && !siteDefaultDark)) {
           // Apply light mode if:
           // 1. User explicitly chose light mode in the past OR
           // 2. No stored preference AND site default is light
           html.classList.remove('dark-mode');
+          // Only set data-user-theme if user has explicitly chosen (not default)
+          if (storedTheme) {
+            html.setAttribute('data-user-theme', 'light');
+          }
         }
       }
       
