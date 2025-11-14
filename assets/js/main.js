@@ -72,15 +72,15 @@ function initDarkMode() {
   
   // Helper functions to toggle icons
   function showDarkModeIcon(toggle) {
-    const sunIcon = toggle.querySelector('.sun');
-    const moonIcon = toggle.querySelector('.moon');
+    const sunIcon = toggle.querySelector('.sun-icon');
+    const moonIcon = toggle.querySelector('.moon-icon');
     if (sunIcon) sunIcon.style.display = 'block';
     if (moonIcon) moonIcon.style.display = 'none';
   }
   
   function showLightModeIcon(toggle) {
-    const sunIcon = toggle.querySelector('.sun');
-    const moonIcon = toggle.querySelector('.moon');
+    const sunIcon = toggle.querySelector('.sun-icon');
+    const moonIcon = toggle.querySelector('.moon-icon');
     if (sunIcon) sunIcon.style.display = 'none';
     if (moonIcon) moonIcon.style.display = 'block';
   }

@@ -31,11 +31,13 @@ html.dark-mode {
   
   /* Header styles */
   .site-header {
-    background-color: rgba($dark-surface, 0.95);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-color: $dark-border-color;
-    box-shadow: $shadow-sm;
+    // All header styling including background, backdrop-filter, border, and box-shadow
+    // are handled in _header.scss component to maintain glassmorphism effect
+    // background-color: rgba($dark-surface, 0.95);
+    // backdrop-filter: blur(10px);
+    // -webkit-backdrop-filter: blur(10px);
+    // border-color: $dark-border-color;
+    // box-shadow: $shadow-sm;
     
     .site-title {
       color: $dark-text-color;

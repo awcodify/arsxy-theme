@@ -115,12 +115,8 @@ favicon:
 
 # Navigation menu
 navigation:
-  - title: Home
-    url: /
-    icon: home # Feather icon name
   - title: Documentation
     url: /docs
-    icon: book-open
     children:
       - title: Getting Started
         url: /docs/installation
@@ -138,7 +134,6 @@ navigation:
         url: /docs/customization
   - title: Blog
     url: /articles
-    icon: edit
     children:
       - title: All Articles
         url: /articles
@@ -150,10 +145,8 @@ navigation:
         icon: tag
   - title: About
     url: /about
-    icon: info
   - title: Contact
     url: /contact
-    icon: mail
 
 # Social links
 social:

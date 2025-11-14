@@ -24,7 +24,6 @@ html.dark-mode body {
 
 /* Ensure main content area follows the theme */
 html.dark-mode .site-header {
-  background-color: rgba($dark-surface, 0.95) !important;
   color: $dark-text-color !important;
 }
 
