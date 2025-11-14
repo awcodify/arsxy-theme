@@ -1,3 +1,5 @@
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+
 <header class="site-header">
   <!-- Elegant accent line at top -->
   <div class="header-accent-line"></div>
@@ -15,99 +17,25 @@
           </div>
         {% else %}
           <span class="site-title-text">{{ site.title | escape }}</span>
+          <svg class="home-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
         {% endif %}
       </a>
     </div>
     
     <!-- Center Section: Navigation (Desktop) -->
     <nav class="site-nav">
-      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
-      <label for="nav-trigger" class="nav-trigger-label">
-        <span class="menu-icon">
-          <span class="menu-bar"></span>
-          <span class="menu-bar"></span>
-          <span class="menu-bar"></span>
-        </span>
-      </label>
-
-      <div class="nav-container">
-        {%- for item in site.navigation -%}
-          {% if item.children %}
-            <div class="nav-item-dropdown">
-              <a class="nav-link has-dropdown" 
-                 href="{{ item.url | relative_url }}"
-                 role="button"
-                 aria-haspopup="true"
-                 aria-expanded="false"
-                 tabindex="0">
-                {% if item.icon %}
-                  <span class="nav-icon-wrapper">
-                    <img src="{{ '/assets/images/icons/' | append: item.icon | append: '.svg' | relative_url }}" 
-                         alt="" class="nav-icon" width="16" height="16">
-                  </span>
-                {% endif %}
-                <span class="nav-text">{{ item.title | escape }}</span>
-                <svg class="dropdown-arrow" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="6,9 12,15 18,9"></polyline>
-                </svg>
-              </a>
-              <div class="dropdown-menu" role="menu">
-                {%- for child in item.children -%}
-                  {% if child.children %}
-                    <div class="dropdown-submenu">
-                      <a href="{{ child.url | relative_url }}" 
-                         class="dropdown-link has-submenu"
-                         role="button"
-                         aria-haspopup="true"
-                         aria-expanded="false"
-                         tabindex="0">
-                        {% if child.icon %}
-                          <span class="nav-icon-wrapper">
-                            <img src="{{ '/assets/images/icons/' | append: child.icon | append: '.svg' | relative_url }}" 
-                                 alt="" class="nav-icon" width="14" height="14">
-                          </span>
-                        {% endif %}
-                        <span class="nav-text">{{ child.title | escape }}</span>
-                        <svg class="submenu-arrow" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                          <polyline points="9,18 15,12 9,6"></polyline>
-                        </svg>
-                      </a>
-                      <div class="submenu" role="menu">
-                        {%- for grandchild in child.children -%}
-                          <a href="{{ grandchild.url | relative_url }}" 
-                             class="submenu-link"
-                             role="menuitem"
-                             tabindex="-1">
-                            {% if grandchild.icon %}
-                              <span class="nav-icon-wrapper">
-                                <img src="{{ '/assets/images/icons/' | append: grandchild.icon | append: '.svg' | relative_url }}" 
-                                     alt="" class="nav-icon" width="12" height="12">
-                              </span>
-                            {% endif %}
-                            <span class="nav-text">{{ grandchild.title | escape }}</span>
-                          </a>
-                        {%- endfor -%}
-                      </div>
-                    </div>
-                  {% else %}
-                    <a href="{{ child.url | relative_url }}" 
-                       class="dropdown-link"
-                       role="menuitem"
-                       tabindex="-1">
-                      {% if child.icon %}
-                        <span class="nav-icon-wrapper">
-                          <img src="{{ '/assets/images/icons/' | append: child.icon | append: '.svg' | relative_url }}" 
-                               alt="" class="nav-icon" width="14" height="14">
-                        </span>
-                      {% endif %}
-                      <span class="nav-text">{{ child.title | escape }}</span>
-                    </a>
-                  {% endif %}
-                {%- endfor -%}
-              </div>
-            </div>
-          {% else %}
-            <a class="nav-link" href="{{ item.url | relative_url }}">
+      {%- for item in site.navigation -%}
+        {% if item.children %}
+          <div class="nav-item-dropdown">
+            <a class="nav-link has-dropdown" 
+               href="{{ item.url | relative_url }}"
+               role="button"
+               aria-haspopup="true"
+               aria-expanded="false"
+               tabindex="0">
               {% if item.icon %}
                 <span class="nav-icon-wrapper">
                   <img src="{{ '/assets/images/icons/' | append: item.icon | append: '.svg' | relative_url }}" 
@@ -115,11 +43,91 @@
                 </span>
               {% endif %}
               <span class="nav-text">{{ item.title | escape }}</span>
+              <svg class="dropdown-arrow" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6,9 12,15 18,9"></polyline>
+              </svg>
             </a>
-          {% endif %}
-        {%- endfor -%}
-      </div>
+            <div class="dropdown-menu" role="menu">
+              {%- for child in item.children -%}
+                {% if child.children %}
+                  <div class="dropdown-submenu">
+                    <a href="{{ child.url | relative_url }}" 
+                       class="dropdown-link has-submenu"
+                       data-submenu-id="mobile-submenu-{{ forloop.parentloop.index }}-{{ forloop.index }}"
+                       role="button"
+                       aria-haspopup="true"
+                       aria-expanded="false"
+                       tabindex="0">
+                      {% if child.icon %}
+                        <span class="nav-icon-wrapper">
+                          <img src="{{ '/assets/images/icons/' | append: child.icon | append: '.svg' | relative_url }}" 
+                               alt="" class="nav-icon" width="14" height="14">
+                        </span>
+                      {% endif %}
+                      <span class="nav-text">{{ child.title | escape }}</span>
+                      <svg class="submenu-arrow" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9,18 15,12 9,6"></polyline>
+                      </svg>
+                    </a>
+                    <div class="submenu" 
+                         id="mobile-submenu-{{ forloop.parentloop.index }}-{{ forloop.index }}"
+                         role="menu">
+                      {%- for grandchild in child.children -%}
+                        <a href="{{ grandchild.url | relative_url }}" 
+                           class="submenu-link"
+                           role="menuitem"
+                           tabindex="-1">
+                          {% if grandchild.icon %}
+                            <span class="nav-icon-wrapper">
+                              <img src="{{ '/assets/images/icons/' | append: grandchild.icon | append: '.svg' | relative_url }}" 
+                                   alt="" class="nav-icon" width="12" height="12">
+                            </span>
+                          {% endif %}
+                          <span class="nav-text">{{ grandchild.title | escape }}</span>
+                        </a>
+                      {%- endfor -%}
+                    </div>
+                  </div>
+                {% else %}
+                  <a href="{{ child.url | relative_url }}" 
+                     class="dropdown-link"
+                     role="menuitem"
+                     tabindex="-1">
+                    {% if child.icon %}
+                      <span class="nav-icon-wrapper">
+                        <img src="{{ '/assets/images/icons/' | append: child.icon | append: '.svg' | relative_url }}" 
+                             alt="" class="nav-icon" width="14" height="14">
+                      </span>
+                    {% endif %}
+                    <span class="nav-text">{{ child.title | escape }}</span>
+                  </a>
+                {% endif %}
+              {%- endfor -%}
+            </div>
+          </div>
+        {% else %}
+          <a class="nav-link" href="{{ item.url | relative_url }}">
+            {% if item.icon %}
+              <span class="nav-icon-wrapper">
+                <img src="{{ '/assets/images/icons/' | append: item.icon | append: '.svg' | relative_url }}" 
+                     alt="" class="nav-icon" width="16" height="16">
+              </span>
+            {% endif %}
+            <span class="nav-text">{{ item.title | escape }}</span>
+          </a>
+        {% endif %}
+      {%- endfor -%}
     </nav>
+    
+    <label for="nav-trigger" class="nav-trigger-label">
+      <span class="menu-icon">
+        <svg viewBox="0 0 24 24" fill="none">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </span>
+    </label>
     
     <!-- Right Section: Actions -->
     <div class="header-actions">
@@ -152,28 +160,130 @@
       {% endif %}
     </div>
   </div>
+</header>
+
+<div class="nav-container">
+  {%- for item in site.navigation -%}
+    {% if item.children %}
+      <a class="nav-link has-dropdown" 
+         href="{{ item.url | relative_url }}"
+         role="button"
+         aria-haspopup="true"
+         aria-expanded="false"
+         data-dropdown-id="mobile-dropdown-{{ forloop.index }}"
+         tabindex="0">
+        {% if item.icon %}
+          <span class="nav-icon-wrapper">
+            <img src="{{ '/assets/images/icons/' | append: item.icon | append: '.svg' | relative_url }}" 
+                 alt="" class="nav-icon" width="16" height="16">
+          </span>
+        {% endif %}
+        <span class="nav-text">{{ item.title | escape }}</span>
+        <svg class="dropdown-arrow" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6,9 12,15 18,9"></polyline>
+        </svg>
+      </a>
+    {% else %}
+      <a class="nav-link" href="{{ item.url | relative_url }}">
+        {% if item.icon %}
+          <span class="nav-icon-wrapper">
+            <img src="{{ '/assets/images/icons/' | append: item.icon | append: '.svg' | relative_url }}" 
+                 alt="" class="nav-icon" width="16" height="16">
+          </span>
+        {% endif %}
+        <span class="nav-text">{{ item.title | escape }}</span>
+      </a>
+    {% endif %}
+  {%- endfor -%}
   
-  {% if site.search_enabled != false %}
-  <div class="search-overlay" id="search-overlay">
-    <div class="search-overlay-content">
-      <div class="search-header">
-        <h2>Search</h2>
-        <button class="close-search" id="close-search" aria-label="Close search">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
+  {%- for item in site.navigation -%}
+    {% if item.children %}
+      <div class="dropdown-menu" role="menu" id="mobile-dropdown-{{ forloop.index }}">
+        {%- for child in item.children -%}
+          {% if child.children %}
+            <a href="{{ child.url | relative_url }}" 
+               class="dropdown-link has-submenu"
+               role="button"
+               aria-haspopup="true"
+               aria-expanded="false"
+               data-submenu-id="mobile-submenu-{{ forloop.parentloop.index }}-{{ forloop.index }}"
+               tabindex="0">
+              {% if child.icon %}
+                <span class="nav-icon-wrapper">
+                  <img src="{{ '/assets/images/icons/' | append: child.icon | append: '.svg' | relative_url }}" 
+                       alt="" class="nav-icon" width="14" height="14">
+                </span>
+              {% endif %}
+              <span class="nav-text">{{ child.title | escape }}</span>
+              <svg class="submenu-arrow" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9,18 15,12 9,6"></polyline>
+              </svg>
+            </a>
+          {% else %}
+            <a href="{{ child.url | relative_url }}" 
+               class="dropdown-link"
+               role="menuitem"
+               tabindex="-1">
+              {% if child.icon %}
+                <span class="nav-icon-wrapper">
+                  <img src="{{ '/assets/images/icons/' | append: child.icon | append: '.svg' | relative_url }}" 
+                       alt="" class="nav-icon" width="14" height="14">
+                </span>
+              {% endif %}
+              <span class="nav-text">{{ child.title | escape }}</span>
+            </a>
+          {% endif %}
+        {%- endfor -%}
       </div>
-      <div class="search-form">
-        <input type="text" id="search-input-overlay" placeholder="Search for articles..." aria-label="Search" autocomplete="off">
-        <div id="search-results-overlay" class="search-results-container"></div>
-        
-        <div class="advanced-search-link">
-          <a href="{{ '/search/' | relative_url }}">Advanced Search</a>
-        </div>
+    {% endif %}
+  {%- endfor -%}
+  
+  {%- for item in site.navigation -%}
+    {% if item.children %}
+      {%- for child in item.children -%}
+        {% if child.children %}
+          <div class="submenu" role="menu" id="mobile-submenu-{{ forloop.parentloop.index }}-{{ forloop.index }}">
+            {%- for grandchild in child.children -%}
+              <a href="{{ grandchild.url | relative_url }}" 
+                 class="submenu-link"
+                 role="menuitem"
+                 tabindex="-1">
+                {% if grandchild.icon %}
+                  <span class="nav-icon-wrapper">
+                    <img src="{{ '/assets/images/icons/' | append: grandchild.icon | append: '.svg' | relative_url }}" 
+                         alt="" class="nav-icon" width="12" height="12">
+                  </span>
+                {% endif %}
+                <span class="nav-text">{{ grandchild.title | escape }}</span>
+              </a>
+            {%- endfor -%}
+          </div>
+        {% endif %}
+      {%- endfor -%}
+    {% endif %}
+  {%- endfor -%}
+</div>
+
+{% if site.search_enabled != false %}
+<div class="search-overlay" id="search-overlay">
+  <div class="search-overlay-content">
+    <div class="search-header">
+      <h2>Search</h2>
+      <button class="close-search" id="close-search" aria-label="Close search">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <div class="search-form">
+      <input type="text" id="search-input-overlay" placeholder="Search for articles..." aria-label="Search" autocomplete="off">
+      <div id="search-results-overlay" class="search-results-container"></div>
+      
+      <div class="advanced-search-link">
+        <a href="{{ '/search/' | relative_url }}">Advanced Search</a>
       </div>
     </div>
   </div>
-  {% endif %}
-</header>
+</div>
+{% endif %}

@@ -130,10 +130,6 @@ function initTableOfContents() {
     const tocLinks = document.querySelectorAll('.floating-toc .toc a, .table-of-contents .toc a, .docs-sidebar .docs-nav a');
     
     if (headings.length && tocLinks.length) {
-      // Add debug logs
-      console.log(`TOC Initialization: Found ${headings.length} headings and ${tocLinks.length} TOC links`);
-      console.log('TOC Containers:', tocContainers);
-      
       // Set up Intersection Observer for headings
       const headingsObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -261,7 +257,6 @@ function initTableOfContents() {
       if (activeLink) {
         // Add active class to current link
         activeLink.classList.add('active');
-        console.log('Activated link:', activeLink.textContent, 'in container:', container.className);
         
         // Find the scrollable container for this TOC
         let tocElement;
@@ -273,7 +268,6 @@ function initTableOfContents() {
         
         // Auto-scroll the TOC to show the active link
         if (tocElement && tocElement.scrollHeight > tocElement.clientHeight) {
-          console.log('Autoscrolling container:', tocElement.className);
           
           // Calculate the position of the active link relative to the TOC container
           const activeLinkRect = activeLink.getBoundingClientRect();
@@ -284,7 +278,6 @@ function initTableOfContents() {
           const isLinkBelow = activeLinkRect.bottom > tocRect.bottom - 40; // Add padding for better visibility
           
           if (isLinkAbove || isLinkBelow) {
-            console.log('Link is outside visible area, scrolling TOC');
             
             // Get the scroll position of the link relative to the TOC
             // This is more reliable than offsetTop in some cases
@@ -347,15 +340,40 @@ function initCodeCopy() {
  * Mobile Navigation Functionality
  */
 function initMobileNav() {
-  const navTrigger = document.querySelector('.nav-trigger');
-  if (!navTrigger) return;
+  const navTrigger = document.getElementById('nav-trigger');
+  const navContainer = document.querySelector('.nav-container');
+  const navLabel = document.querySelector('.nav-trigger-label');
   
-  // Close menu when clicking outside
-  document.addEventListener('click', function(event) {
-    const isNavOpen = navTrigger.checked;
-    const isClickInsideNav = event.target.closest('.site-nav');
+  if (!navTrigger || !navContainer) {
+    console.error('Missing nav elements!');
+    return;
+  }
+  
+  // Test if clicking label toggles checkbox
+  navLabel?.addEventListener('click', function(e) {
+    e.preventDefault();
+    // Toggle the checkbox manually
+    navTrigger.checked = !navTrigger.checked;
+    // Trigger change event
+    navTrigger.dispatchEvent(new Event('change'));
+  });
+  
+  // Monitor checkbox changes
+  navTrigger.addEventListener('change', function() {
     
-    if (isNavOpen && !isClickInsideNav) {
+    if (this.checked) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  });
+  
+  // Close menu when clicking close button area (top-right of sidebar)
+  navContainer.addEventListener('click', function(event) {
+    const rect = navContainer.getBoundingClientRect();
+    const isCloseButton = event.clientX > (rect.right - 60) && event.clientY < (rect.top + 60);
+    
+    if (isCloseButton) {
       navTrigger.checked = false;
     }
   });
@@ -391,28 +409,29 @@ function initNestedNav() {
 function initAccessibilityAttributes() {
   // Add ARIA attributes for dropdowns
   const dropdownToggles = document.querySelectorAll('.has-dropdown');
-  dropdownToggles.forEach((toggle, index) => {
-    const dropdown = toggle.nextElementSibling;
-    if (dropdown && dropdown.classList.contains('dropdown-menu')) {
-      // Set unique IDs and ARIA attributes
-      const dropdownId = `dropdown-${index}`;
-      dropdown.id = dropdownId;
-      toggle.setAttribute('aria-haspopup', 'true');
-      toggle.setAttribute('aria-expanded', 'false');
-      toggle.setAttribute('aria-controls', dropdownId);
+  dropdownToggles.forEach((toggle) => {
+    const dropdownId = toggle.getAttribute('data-dropdown-id');
+    if (dropdownId) {
+      const dropdown = document.getElementById(dropdownId);
+      if (dropdown) {
+        toggle.setAttribute('aria-haspopup', 'true');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-controls', dropdownId);
+      }
     }
   });
   
   // Add ARIA attributes for submenus
   const submenuToggles = document.querySelectorAll('.has-submenu');
-  submenuToggles.forEach((toggle, index) => {
-    const submenu = toggle.nextElementSibling;
-    if (submenu && submenu.classList.contains('submenu')) {
-      const submenuId = `submenu-${index}`;
-      submenu.id = submenuId;
-      toggle.setAttribute('aria-haspopup', 'true');
-      toggle.setAttribute('aria-expanded', 'false');
-      toggle.setAttribute('aria-controls', submenuId);
+  submenuToggles.forEach((toggle) => {
+    const submenuId = toggle.getAttribute('data-submenu-id');
+    if (submenuId) {
+      const submenu = document.getElementById(submenuId);
+      if (submenu) {
+        toggle.setAttribute('aria-haspopup', 'true');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-controls', submenuId);
+      }
     }
   });
 }
@@ -422,25 +441,36 @@ function initMobileDropdowns() {
   removeMobileDropdowns();
   
   // Handle main dropdown toggles with improved touch handling
-  const dropdownToggles = document.querySelectorAll('.has-dropdown');
+  const dropdownToggles = document.querySelectorAll('.nav-container .has-dropdown');
   dropdownToggles.forEach(toggle => {
     // Prevent double-tap zoom on iOS
     toggle.style.touchAction = 'manipulation';
     
     // Use a single touch/click handler with better event management
     const handleToggle = function(e) {
-      e.preventDefault();
-      e.stopPropagation();
+      const dropdownId = this.getAttribute('data-dropdown-id');
+      const dropdown = document.getElementById(dropdownId);
       
-      const dropdown = this.nextElementSibling;
-      if (dropdown && dropdown.classList.contains('dropdown-menu')) {
+      
+      if (dropdown) {
         const isActive = dropdown.classList.contains('active');
+        
+        // If dropdown is not active, prevent navigation and toggle instead
+        if (!isActive) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        // If dropdown is already active, allow navigation to the link
+        else {
+          // Let the link navigate naturally
+          return;
+        }
         
         // Close all other dropdowns first
         document.querySelectorAll('.dropdown-menu.active').forEach(otherDropdown => {
           if (otherDropdown !== dropdown) {
             otherDropdown.classList.remove('active');
-            const otherToggle = otherDropdown.previousElementSibling;
+            const otherToggle = document.querySelector(`[data-dropdown-id="${otherDropdown.id}"]`);
             if (otherToggle) {
               otherToggle.setAttribute('aria-expanded', 'false');
               const otherArrow = otherToggle.querySelector('.dropdown-arrow');
@@ -449,23 +479,37 @@ function initMobileDropdowns() {
           }
         });
         
-        // Toggle current dropdown
-        dropdown.classList.toggle('active', !isActive);
-        this.setAttribute('aria-expanded', !isActive ? 'true' : 'false');
+        // Toggle current dropdown (open it)
+        dropdown.classList.add('active');
+        this.setAttribute('aria-expanded', 'true');
+        
+        // Position dropdown right after the toggle link by inserting it after the toggle
+        const navContainer = document.querySelector('.nav-container');
+        // Move dropdown to be right after this toggle in the DOM
+        this.parentNode.insertBefore(dropdown, this.nextSibling);
+        
+        // Reset positioning to use normal flow
+        dropdown.style.position = 'relative';
+        dropdown.style.top = '';
+        dropdown.style.left = '';
+        dropdown.style.right = '';
+        dropdown.style.width = '';
+        
+        // Force reflow to ensure proper positioning
+        void dropdown.offsetHeight; // Trigger reflow
         
         // Update arrow rotation with smooth animation
         const arrow = this.querySelector('.dropdown-arrow');
         if (arrow) {
-          arrow.style.transform = !isActive ? 'rotate(180deg)' : 'rotate(0deg)';
+          arrow.style.transform = 'rotate(180deg)';
         }
         
         // Add focus management for better accessibility
-        if (!isActive) {
-          const firstLink = dropdown.querySelector('.dropdown-link');
-          if (firstLink) {
-            setTimeout(() => firstLink.focus(), 100);
-          }
+        const firstLink = dropdown.querySelector('.dropdown-link');
+        if (firstLink) {
+          setTimeout(() => firstLink.focus(), 100);
         }
+      } else {
       }
     };
     
@@ -485,23 +529,34 @@ function initMobileDropdowns() {
   });
   
   // Handle submenu toggles with improved touch handling
-  const submenuToggles = document.querySelectorAll('.has-submenu');
-  submenuToggles.forEach(toggle => {
+  const submenuToggles = document.querySelectorAll('.nav-container .has-submenu');
+  submenuToggles.forEach((toggle, index) => {
     toggle.style.touchAction = 'manipulation';
     
     const handleSubmenuToggle = function(e) {
-      e.preventDefault();
-      e.stopPropagation();
+      const submenuId = this.getAttribute('data-submenu-id');
+      const submenu = document.getElementById(submenuId);
       
-      const submenu = this.nextElementSibling;
-      if (submenu && submenu.classList.contains('submenu')) {
+      
+      if (submenu) {
         const isActive = submenu.classList.contains('active');
+        
+        // If submenu is not active, prevent navigation and toggle instead
+        if (!isActive) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        // If submenu is already active, allow navigation to the link
+        else {
+          // Let the link navigate naturally
+          return;
+        }
         
         // Close all other submenus first
         document.querySelectorAll('.submenu.active').forEach(otherSubmenu => {
           if (otherSubmenu !== submenu) {
             otherSubmenu.classList.remove('active');
-            const otherToggle = otherSubmenu.previousElementSibling;
+            const otherToggle = document.querySelector(`[data-submenu-id="${otherSubmenu.id}"]`);
             if (otherToggle) {
               otherToggle.setAttribute('aria-expanded', 'false');
               const otherArrow = otherToggle.querySelector('.submenu-arrow');
@@ -510,23 +565,37 @@ function initMobileDropdowns() {
           }
         });
         
-        // Toggle current submenu
-        submenu.classList.toggle('active', !isActive);
-        this.setAttribute('aria-expanded', !isActive ? 'true' : 'false');
+        // Toggle current submenu (open it)
+        submenu.classList.add('active');
+        this.setAttribute('aria-expanded', 'true');
+        
+        // Position submenu right after this toggle by inserting it after the toggle
+        // Move submenu to be right after this toggle in the DOM
+        this.parentNode.insertBefore(submenu, this.nextSibling);
+        
+        // Reset positioning to use normal flow
+        submenu.style.position = 'relative';
+        submenu.style.top = '';
+        submenu.style.left = '';
+        submenu.style.right = '';
+        submenu.style.width = '';
+        
+        
+        // Force reflow to ensure proper positioning
+        void submenu.offsetHeight; // Trigger reflow
         
         // Update arrow rotation
         const arrow = this.querySelector('.submenu-arrow');
         if (arrow) {
-          arrow.style.transform = !isActive ? 'rotate(90deg)' : 'rotate(0deg)';
+          arrow.style.transform = 'rotate(90deg)';
         }
         
         // Focus management
-        if (!isActive) {
-          const firstLink = submenu.querySelector('.submenu-link');
-          if (firstLink) {
-            setTimeout(() => firstLink.focus(), 100);
-          }
+        const firstLink = submenu.querySelector('.submenu-link');
+        if (firstLink) {
+          setTimeout(() => firstLink.focus(), 100);
         }
+      } else {
       }
     };
     
@@ -543,10 +612,17 @@ function initMobileDropdowns() {
     toggle.addEventListener('keydown', handleSubmenuKeydown);
   });
   
+  // Prevent submenu link clicks from closing parent dropdown
+  document.querySelectorAll('.nav-container .submenu-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+  });
+  
   // Close dropdowns when clicking outside with improved detection
   const handleOutsideClick = function(e) {
-    // Don't close if clicking on navigation elements
-    if (!e.target.closest('.site-nav')) {
+    // Don't close if clicking on navigation elements (desktop or mobile)
+    if (!e.target.closest('.site-nav') && !e.target.closest('.nav-container')) {
       document.querySelectorAll('.dropdown-menu.active').forEach(dropdown => {
         dropdown.classList.remove('active');
         const parentToggle = dropdown.previousElementSibling;
