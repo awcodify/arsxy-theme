@@ -758,9 +758,6 @@
       display: none;
       margin: 0;
       padding: 0 $spacing-md;
-      background: rgba($background-color, 0.6);
-      backdrop-filter: blur(16px) saturate(180%);
-      -webkit-backdrop-filter: blur(16px) saturate(180%);
       border-radius: $border-radius-sm;
       
       &.active {
@@ -815,9 +812,6 @@
       display: none;
       margin: 0;
       padding: 0 $spacing-md 0 $spacing-lg;
-      background: rgba($background-color, 0.4);
-      backdrop-filter: blur(12px) saturate(160%);
-      -webkit-backdrop-filter: blur(12px) saturate(160%);
       border-radius: $border-radius-sm;
       
       &.active {
