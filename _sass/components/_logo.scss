@@ -40,17 +40,24 @@
  */
 
 /* Original - no filter applied */
-.dark-mode .original {
+.dark-mode .original,
+html.dark-mode .original {
   /* Keep original logo appearance without any filter */
   filter: none;
 }
 
 /* Inverted - inverts all colors */
-.dark-mode .inverted {
+.dark-mode .inverted,
+html.dark-mode .inverted,
+html.dark-mode .desktop-only .inverted,
+html.dark-mode .site-logo-wrapper .inverted {
   filter: invert(1) brightness(1.2);
 }
 
 /* Selective lighten - only lightens dark colors */
-.dark-mode .selective-lighten {
+.dark-mode .selective-lighten,
+html.dark-mode .selective-lighten,
+html.dark-mode .desktop-only .selective-lighten,
+html.dark-mode .site-logo-wrapper .selective-lighten {
   filter: brightness(4) saturate(5) hue-rotate(25deg);
 }
