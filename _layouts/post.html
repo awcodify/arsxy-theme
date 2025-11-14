@@ -4,66 +4,65 @@ layout: default
 {% assign sidebar_pos = site.toc_position | default: "right" %}
 <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
-  <header class="post-header">
-    <div class="post-meta">
-      <span class="post-date-author">
-        <time class="dt-published post-date" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
+  <!-- Hero Header Section -->
+  <div class="post-hero">
+    <div class="post-hero-content">
+      {%- if page.categories.size > 0 -%}
+      <div class="post-hero-categories">
+        {% for category in page.categories %}
+        {% assign category_slug = category | slugify %}
+        <a href="{{ '/categories/#' | append: category_slug | relative_url }}" class="category-badge">{{ category }}</a>
+        {% endfor %}
+      </div>
+      {%- endif -%}
+      
+      <h1 class="post-hero-title p-name" itemprop="name headline">{{ page.title | escape }}</h1>
+      
+      {%- if page.description -%}
+      <p class="post-hero-description" itemprop="description">{{ page.description }}</p>
+      {%- endif -%}
+      
+      <div class="post-hero-meta">
+        <time class="dt-published" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
           {%- assign date_format = site.date_format | default: "%b %-d, %Y" -%}
           {{ page.date | date: date_format }}
         </time>
         {%- if page.author -%}
-        <span class="separator">|</span>
+        <span class="meta-separator">•</span>
         <span class="post-author" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <span itemprop="name">{{ page.author }}</span>
         </span>
         {%- endif -%}
-      </span>
-      
-      {%- if page.categories.size > 0 -%}
-      <span class="post-categories">
-        {% for category in page.categories %}
-        {% assign category_slug = category | slugify %}
-        <a href="{{ '/categories/#' | append: category_slug | relative_url }}">{{ category }}</a>
-        {% endfor %}
-      </span>
-      {%- endif -%}
-      
-      <span class="reading-time" title="Estimated read time">
-        {% assign words = content | number_of_words %}
-        {% if words < 360 %}
-          1 min read
-        {% else %}
-          {{ words | divided_by: 180 }} min read
-        {% endif %}
-      </span>
+        <span class="meta-separator">•</span>
+        <span class="reading-time">
+          {% assign words = content | number_of_words %}
+          {% if words < 360 %}
+            1 min read
+          {% else %}
+            {{ words | divided_by: 180 }} min read
+          {% endif %}
+        </span>
+      </div>
     </div>
     
-    <h1 class="post-title p-name" itemprop="name headline">{{ page.title | escape }}</h1>
-    
-    {%- if page.description -%}
-    <p class="post-description" itemprop="description">{{ page.description }}</p>
-    {%- endif -%}
-  </header>
-
-  {%- if page.image -%}
-    <div class="post-featured-image">
+    {%- if page.image -%}
+    <div class="post-hero-image">
       <img 
         src="{{ '/assets/images/' | append: page.image | relative_url }}" 
         alt="{{ page.title }}" 
-        width="800" 
-        height="450" 
+        width="1200" 
+        height="675" 
         loading="eager"
-        style="aspect-ratio: 16/9; max-width: 100%; height: auto;"
       />
     </div>
-  {% else %}
-    <!-- Generate CSS featured image for posts without specified images -->
-    <div class="post-featured-image css-featured-image" 
+    {% else %}
+    <div class="css-featured-image" 
          data-pattern="{{ page.title | size | modulo: 6 }}" 
          data-title="{{ page.title | slice: 0 | upcase }}">
       <div class="css-image-title">{{ page.title | slice: 0 | upcase }}</div>
     </div>
-  {%- endif -%}
+    {%- endif -%}
+  </div>
 
   <div class="post-layout {% if sidebar_pos == 'left' %}sidebar-left{% else %}sidebar-right{% endif %}">
     {% if page.toc != false %}

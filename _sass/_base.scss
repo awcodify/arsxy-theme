@@ -27,6 +27,7 @@
   --primary-color: #{$primary-color};
   --primary-color-rgb: #{$primary-color-rgb};
   --secondary-color: #{$secondary-color};
+  --secondary-rgb: 0, 209, 178;
   // --accent-color: #{$accent-color};
   --text-color: #{$text-color};
   --bg-color: #{$background-color};
@@ -34,6 +35,7 @@
   --link-color: #{$link-color};
   --link-hover-color: #{$link-hover-color};
   --text-muted: #{$dark-gray};
+  --text-secondary: #{$dark-gray};
   
   /* Overlay colors */
   --overlay-bg: rgba(0, 0, 0, 0.8); /* Semi-transparent black for light mode */
@@ -53,6 +55,7 @@ html.dark-mode {
   --primary-color: #{lighten($primary-color, 15%)};
   --primary-color-rgb: 101, 151, 230; /* Lightened RGB values for primary color */
   --secondary-color: #{lighten($secondary-color, 15%)};
+  --secondary-rgb: 80, 227, 201;
   // --accent-color: #{lighten($accent-color, 15%)};
   --text-color: #{$dark-text-color};
   --bg-color: #{$dark-background};
@@ -60,6 +63,7 @@ html.dark-mode {
   --link-color: #{lighten($link-color, 15%)};
   --link-hover-color: #{lighten($link-hover-color, 15%)};
   --text-muted: #{$dark-gray-light};
+  --text-secondary: #{$dark-gray-light};
   
   /* Overlay colors */
   --overlay-bg: rgba(0, 0, 0, 0.9); /* Slightly darker for dark mode */
