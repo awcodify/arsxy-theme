@@ -225,11 +225,18 @@
       .card-image {
         height: 180px;
         overflow: hidden;
+        background: linear-gradient(135deg, 
+          rgba(var(--primary-rgb, 99, 102, 241), 0.03) 0%, 
+          rgba(var(--secondary-rgb, 139, 92, 246), 0.03) 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
         
         img {
           width: 100%;
-          height: 100%;
-          object-fit: cover;
+          height: auto;
+          max-height: 100%;
+          object-fit: contain;
           transition: transform 0.5s ease;
           
           &:hover {
@@ -377,11 +384,21 @@
         
         .post-preview-image {
           flex: 1;
+          max-height: 200px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: linear-gradient(135deg, 
+            rgba(var(--primary-rgb, 99, 102, 241), 0.03) 0%, 
+            rgba(var(--secondary-rgb, 139, 92, 246), 0.03) 100%);
+          border-radius: 6px;
+          overflow: hidden;
           
           img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: auto;
+            max-height: 100%;
+            object-fit: contain;
             border-radius: 6px;
             transition: transform 0.3s ease;
             
