@@ -4,9 +4,8 @@
   max-height: 32px; /* Reduced from 30px to match header.scss and make header shorter */
   width: auto;
   transition: filter 0.3s ease;
-  
-  /* Base styles that work well in light mode */
-  filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.1));
+  box-shadow: none !important; /* Remove box-shadow from logo */
+  border-radius: 0; /* Remove border-radius from logo */
 }
 
 /* Ensure the logo doesn't get too large on small screens */
