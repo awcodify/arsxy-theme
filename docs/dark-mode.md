@@ -157,6 +157,27 @@ For advanced customization of dark mode, you can:
 }
 ```
 
+## Homepage Dark Mode Support
+
+The homepage layout is fully compatible with dark mode:
+- All cards, headings, and sidebar widgets use CSS variables for background and text color
+- Featured/article cards and sidebar widgets adapt automatically to dark mode
+- Text contrast and card borders are optimized for readability
+
+### Customizing Homepage Dark Mode
+
+Override any homepage variable in your custom SCSS for dark mode:
+
+```scss
+html.dark-mode {
+  --bg-card: #1e293b;
+  --text-title: #e2e8f0;
+  --border-color: #334155;
+}
+```
+
+See [CSS Variables Reference](/docs/css-variables/) for a full list.
+
 ## Related Resources
 
 - [Customizing Your Arsxy Theme](/docs/customization/)

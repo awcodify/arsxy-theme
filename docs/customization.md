@@ -300,6 +300,18 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 ```
 
+## Customizing the Homepage
+
+The homepage is now highly modular and customizable:
+
+- **Hero Section**: Set the title, subtitle, and buttons in `_config.yml` under `homepage.hero`.
+- **Featured Posts**: Add `featured: true` to any post's front matter to display it in the homepage featured section. The layout is 1 full-width card + 2 grid cards.
+- **Latest Articles**: The article list uses a dense, single-row card layout with right-aligned thumbnails. You can adjust card appearance via SCSS variables or override in `_custom.scss`.
+- **Sidebar**: Sidebar widgets (categories, tags, about) are modular includes. You can add, remove, or reorder them by editing the `_includes/sidebar/` files.
+- **Dark Mode**: All homepage elements adapt to dark mode automatically. You can override dark mode variables in your custom SCSS.
+
+See also: [CSS Variables Reference](/docs/css-variables/) and [Dark Mode](/docs/dark-mode/).
+
 ## Best Practices for Customization
 
 1. **Use Configuration First**: Always try to use `_config.yml` options before custom code

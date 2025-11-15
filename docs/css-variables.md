@@ -345,6 +345,24 @@ To override any CSS variable, add your custom values to your `_sass/_custom.scss
 --table-cell-padding: 0.75rem;
 ```
 
+### Homepage-Specific Variables
+
+The homepage redesign uses the following key CSS variables for layout and color:
+
+```css
+--bg-card:         /* Card background for featured and article cards */
+--bg-secondary:    /* Sidebar and widget backgrounds */
+--text-title:      /* Main heading and card title color */
+--text-secondary:  /* Subtitle and secondary text color */
+--border-color:    /* Card and widget border color */
+```
+
+These variables are defined for both light and dark mode in `_sass/_base.scss` and can be overridden in your custom SCSS.
+
+- To remove card backgrounds, set `--bg-card: transparent;` in your custom CSS.
+- To adjust card or sidebar appearance, override `--bg-card`, `--bg-secondary`, and `--border-color`.
+- All homepage cards and widgets use these variables for consistent theming.
+
 ## Using CSS Variables in Custom Code
 
 ### Basic Usage in CSS

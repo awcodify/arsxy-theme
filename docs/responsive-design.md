@@ -509,3 +509,13 @@ Responsive design impacts accessibility:
 - [Typography](/docs/typography/)
 - [Performance Optimization](/docs/performance/)
 - [Layout Components](/docs/components/layout/)
+
+## Homepage Responsive Layout
+
+The homepage uses a modern, responsive grid and flexbox system:
+- **Hero section**: Scales headline and buttons for all screen sizes
+- **Featured posts**: 1 full-width + 2 grid cards, stack vertically on mobile
+- **Article list**: Single-row cards with right-aligned thumbnails, become stacked on small screens
+- **Sidebar**: Moves below main content on mobile
+
+All breakpoints and grid settings are controlled by SCSS variables and mixins. See the homepage SCSS for details.

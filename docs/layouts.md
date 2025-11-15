@@ -52,6 +52,20 @@ title: Documentation
 ---
 ```
 
+## Homepage Layout (Redesigned)
+
+The `home` layout now features:
+- Animated gradient hero section (configurable in `_config.yml`)
+- Featured posts: 1 full-width + 2 grid cards, with images and badges
+- Latest articles: Dense, single-row cards with right-aligned thumbnails
+- Sidebar: Modern widgets for categories, tags, and about
+- Fully responsive and dark mode compatible
+
+**Customization:**
+- Mark posts as `featured: true` to show in the featured section
+- Adjust hero, featured, and sidebar content via `_config.yml` and includes
+- All layout colors and spacing are controlled by CSS variables
+
 ## Customizing Layouts
 
 You can customize any of these layouts by:

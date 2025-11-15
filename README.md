@@ -171,3 +171,24 @@ We appreciate your contributions to make Arsxy Theme better! Please check out ou
 - Development process
 
 When submitting pull requests, please use the appropriate PR template to help maintainers understand and review your changes efficiently.
+
+## Homepage Redesign (v1.0+)
+
+The Arsxy Theme homepage has been completely redesigned for a denser, more modern, and highly customizable experience:
+
+- **Animated Gradient Hero**: CSS-only animated gradient background with headline, subtitle, and call-to-action buttons.
+- **Featured Posts**: One full-width featured article at the top, followed by a grid of two featured articles below, each with a prominent image and badge.
+- **Latest Articles**: Dense, full-width article list with right-aligned thumbnails, minimal padding, and semantic HTML for SEO.
+- **Modern Sidebar**: Categories, tags, and about widgets in a visually distinct sidebar.
+- **Dark Mode**: All homepage elements fully support dark mode, with improved text and card contrast.
+- **Performance**: No JavaScript required for layout or animation; all effects are pure CSS.
+
+### Customizing the Homepage
+
+- **Featured Posts**: Mark posts as `featured: true` in their front matter to display them in the featured section.
+- **Hero Section**: Configure the hero title, subtitle, and buttons in `_config.yml` under `homepage.hero`.
+- **Sidebar**: Sidebar widgets (categories, tags, about) are controlled via includes and can be customized or reordered.
+- **Colors & Variables**: All colors, backgrounds, and card styles are controlled via CSS variables (see [CSS Variables Reference](docs/css-variables.md)).
+- **Responsive**: The homepage layout adapts to all screen sizes, with grid and flexbox breakpoints.
+
+See the [layouts](docs/layouts.md), [customization](docs/customization.md), and [dark mode](docs/dark-mode.md) docs for more details.
