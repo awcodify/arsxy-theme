@@ -1,42 +1,49 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const postHeroImageContainer = document.querySelector('.post-hero-image');
+  // Gather containers we want to process: post hero and featured card images
+  const containers = [];
+  const postHero = document.querySelector('.post-hero-image');
+  if (postHero) containers.push(postHero);
 
-  if (postHeroImageContainer) {
-    const image = postHeroImageContainer.querySelector('img');
+  document.querySelectorAll('.featured-posts .card-image').forEach(el => containers.push(el));
 
-    if (image) {
-      const colorThief = new ColorThief();
+  if (!containers.length) return;
 
-      const setBackgroundColor = () => {
-        try {
-          const dominantColor = colorThief.getColor(image);
-          // To avoid a jarringly bright background, we can check the brightness
-          // of the color and darken it if it's too light.
-          const brightness = (dominantColor[0] * 299 + dominantColor[1] * 587 + dominantColor[2] * 114) / 1000;
-          
-          let finalColor;
-          if (brightness > 200) { // If the color is very light
-            // Darken the color by 20%
-            finalColor = dominantColor.map(c => Math.max(0, c - c * 0.2));
-          } else {
-            finalColor = dominantColor;
-          }
+  const colorThief = new ColorThief();
 
-          postHeroImageContainer.style.backgroundColor = `rgb(${finalColor.join(',')})`;
-        } catch (e) {
-          console.error("Error getting dominant color:", e);
-          // Fallback for cross-origin images or other errors
-          postHeroImageContainer.style.backgroundColor = 'var(--bg-color)';
+  const processContainer = (container) => {
+    const image = container.querySelector('img');
+    if (!image) return;
+
+    const applyStyles = () => {
+      try {
+        // Set blurred background image via CSS variable used in SCSS (::before)
+        container.style.setProperty('--hero-image-url', `url('${image.src}')`);
+
+        // Extract dominant color and apply as background-color with brightness check
+        const dominantColor = colorThief.getColor(image);
+        const brightness = (dominantColor[0] * 299 + dominantColor[1] * 587 + dominantColor[2] * 114) / 1000;
+
+        let finalColor;
+        if (brightness > 200) {
+          finalColor = dominantColor.map(c => Math.max(0, Math.round(c - c * 0.2)));
+        } else {
+          finalColor = dominantColor.map(c => Math.round(c));
         }
-      };
 
-      if (image.complete) {
-        setBackgroundColor();
-      } else {
-        image.addEventListener('load', setBackgroundColor);
-        // Add a cross-origin attribute to handle images from other domains
-        image.crossOrigin = "Anonymous";
+        container.style.backgroundColor = `rgb(${finalColor.join(',')})`;
+      } catch (e) {
+        console.error('Error getting dominant color:', e);
+        container.style.backgroundColor = 'var(--bg-color)';
       }
+    };
+
+    if (image.complete) {
+      applyStyles();
+    } else {
+      image.crossOrigin = 'Anonymous';
+      image.addEventListener('load', applyStyles);
     }
-  }
+  };
+
+  containers.forEach(processContainer);
 });

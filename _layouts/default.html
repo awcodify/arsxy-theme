@@ -152,6 +152,10 @@
   
   {%- include footer.html -%}
   
+  {%- if page.layout == 'post' or page.layout == 'home' -%}
+  {%- include image-color-script.html -%}
+  {%- endif -%}
+
   <script src="{{ "/assets/js/main.js" | relative_url }}" defer></script>
   <script src="{{ "/assets/js/search.js" | relative_url }}" defer></script>
 </body>
