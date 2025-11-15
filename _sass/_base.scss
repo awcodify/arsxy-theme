@@ -62,8 +62,8 @@ html.dark-mode {
   --background-color-alt: #{$dark-surface};
   --link-color: #{lighten($link-color, 15%)};
   --link-hover-color: #{lighten($link-hover-color, 15%)};
-  --text-muted: #{$dark-gray-light};
-  --text-secondary: #{$dark-gray-light};
+  --text-muted: #94a3b8;
+  --text-secondary: #cbd5e1;
   
   /* Overlay colors */
   --overlay-bg: rgba(0, 0, 0, 0.9); /* Slightly darker for dark mode */

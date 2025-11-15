@@ -1,20 +1,21 @@
-// Colors
-$primary-color: #3273dc;       // Modern blue
-$primary-color-rgb: 50, 115, 220; // RGB values for primary color
-$secondary-color: #00d1b2;     // Teal accent
-$accent-color: #ff5c8d;        // Eye-catching pink accent
-$text-color: #2c3e50;          // Softer than pure black
+// Colors - Modern vibrant palette
+$primary-color: #6366f1;       // Indigo - professional yet vibrant
+$primary-color-rgb: 99, 102, 241; // RGB values for primary color
+$secondary-color: #8b5cf6;     // Purple accent
+$accent-color: #ec4899;        // Pink accent for CTAs
+$success-color: #10b981;       // Emerald green
+$warning-color: #f59e0b;       // Amber
+$danger-color: #ef4444;        // Red
+$text-color: #1e293b;          // Dark slate
 $background-color: #ffffff;
-$light-gray: #f9fafb;          // Lighter background
-$gray: #e0e3e8;
-$dark-gray: #8c9bab;
-$code-background: #f0f4f8;
+$light-gray: #f8fafc;          // Slate 50
+$gray: #e2e8f0;                // Slate 200
+$dark-gray: #64748b;           // Slate 500
+$code-background: #f1f5f9;     // Slate 100
 $link-color: $primary-color;
 $link-hover-color: $accent-color;
-$border-color: #edf2f7;
-$success-color: #48c774;
-$warning-color: #ffdd57;
-$danger-color: #ff3860;
+$border-color: #e2e8f0;        // Slate 200
+
 
 // Typography
 $base-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -54,10 +55,10 @@ $transition-base: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 $transition-fast: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
 $transition-slow: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-// Dark mode colors
-$dark-background: #0f172a;    // Dark blue-gray background
-$dark-surface: #1e293b;       // Slightly lighter surface
-$dark-text-color: #e2e8f0;
-$dark-border-color: #334155;
+// Dark mode colors - Modern and vibrant dark mode
+$dark-background: #0f172a;    // Slate 900
+$dark-surface: #1e293b;       // Slate 800
+$dark-text-color: #e2e8f0;    // Slate 200
+$dark-border-color: #334155;  // Slate 700
 $dark-code-background: #1e293b;
-$dark-gray-light: #64748b;
+$dark-gray-light: #64748b;    // Slate 500

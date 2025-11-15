@@ -6,6 +6,7 @@ layout: default
   <!-- Hero Section -->
   {% if site.homepage.hero.enabled %}
   <section class="hero-section">
+    <div class="hero-gradient"></div>
     <div class="hero-content">
       <h1 class="hero-title">{{ site.homepage.hero.title }}</h1>
       <p class="hero-subtitle">{{ site.homepage.hero.subtitle }}</p>
@@ -14,15 +15,6 @@ layout: default
           <a href="{{ button.url | relative_url }}" class="btn {% if button.primary %}btn-primary{% else %}btn-secondary{% endif %}">{{ button.label }}</a>
         {% endfor %}
       </div>
-    </div>
-    <div class="hero-image">
-      <img 
-        src="{{ '/assets/images/' | append: site.homepage.hero.image | relative_url }}" 
-        alt="{{ site.homepage.hero.title }}"
-        width="600"
-        height="400"
-        loading="eager"
-      >
     </div>
   </section>
   {% endif %}
@@ -34,32 +26,41 @@ layout: default
       <!-- Featured Posts Section -->
       {% if site.homepage.featured_posts.enabled %}
       <section class="featured-posts">
-        <h2 class="section-heading">{{ site.homepage.featured_posts.title }}</h2>
         <div class="featured-grid">
           {% assign featured_posts = site.posts | where: "featured", true %}
           {% assign limit = site.homepage.featured_posts.limit | default: 3 %}
           {% for post in featured_posts limit:limit %}
-            <div class="featured-card">
-              {% if post.image %}
+            <article class="featured-card {% if forloop.index == 1 %}featured-main{% else %}featured-secondary{% endif %}">
+              <a href="{{ post.url | relative_url }}" class="card-link">
+                <span class="featured-badge">Featured</span>
+                {% if post.image %}
                 <div class="card-image">
-                  <a href="{{ post.url | relative_url }}">
-                    <img 
-                      src="{{ '/assets/images/' | append: post.image | relative_url }}" 
-                      alt="{{ post.title }}"
-                      width="400"
-                      height="225"
-                      loading="{% if forloop.index <= 1 %}eager{% else %}lazy{% endif %}"
-                    >
-                  </a>
+                  <img 
+                    src="{{ '/assets/images/' | append: post.image | relative_url }}" 
+                    alt="{{ post.title }}"
+                    loading="{% if forloop.index <= 1 %}eager{% else %}lazy{% endif %}"
+                  >
                 </div>
-              {% endif %}
-              <div class="card-content">
-                <span class="card-meta">{{ post.date | date: site.date_format | default: "%b %-d, %Y" }}</span>
-                <h3 class="card-title"><a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h3>
-                <p class="card-excerpt">{{ post.excerpt | strip_html | truncatewords: 20 }}</p>
-                <a href="{{ post.url | relative_url }}" class="read-more" aria-label="Read more">Read more →</a>
-              </div>
-            </div>
+                {% endif %}
+                <div class="card-content">
+                  <div class="card-header">
+                    <span class="card-date">{{ post.date | date: "%b %d" }}</span>
+                    {% if post.categories.size > 0 %}
+                      <span class="card-category">{{ post.categories.first }}</span>
+                    {% endif %}
+                  </div>
+                  <h3 class="card-title">{{ post.title | escape }}</h3>
+                  <p class="card-excerpt">
+                    {% if forloop.index == 1 %}
+                      {{ post.excerpt | strip_html | truncatewords: 50 }}
+                    {% else %}
+                      {{ post.excerpt | strip_html | truncatewords: 30 }}
+                    {% endif %}
+                  </p>
+                  <span class="card-arrow">→</span>
+                </div>
+              </a>
+            </article>
           {% endfor %}
         </div>
       </section>
@@ -69,82 +70,65 @@ layout: default
       {% if site.homepage.latest_articles.enabled %}
       <section class="latest-articles">
         <h2 class="section-heading">{{ site.homepage.latest_articles.title }}</h2>
-        <ul class="post-list">
+        <div class="article-list">
           {% for post in paginator.posts %}
             {% unless post.featured %}
-            <li class="post-item">
-              <div class="post-preview {% unless post.image %}no-image{% endunless %}">
-                <div class="post-preview-content">
-                  <span class="post-meta">
-                    {{ post.date | date: site.date_format | default: "%b %-d, %Y" }}
-                    {% if post.categories.size > 0 %}
-                      <span class="post-categories">
-                        {% for category in post.categories %}
-                          {% assign category_slug = category | slugify %}
-                          <a href="{{ '/categories/#' | append: category_slug | relative_url }}">{{ category }}</a>
-                        {% endfor %}
-                      </span>
-                    {% endif %}
-                  </span>
-                  
-                  <h3>
-                    <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
-                  </h3>
-                  
-                  <p class="post-excerpt">
-                    {% assign excerpt_length = site.homepage.latest_articles.excerpt_length | default: 30 %}
-                    {{ post.excerpt | strip_html | truncatewords: excerpt_length }}
-                  </p>
-                  
-                  <a href="{{ post.url | relative_url }}" class="read-more" aria-label="Read more about {{ post.title }}">Read more →</a>
+            <article class="article-item">
+              <div class="article-body">
+                <div class="article-header">
+                  <time class="article-date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d, %Y" }}</time>
+                  {% if post.categories.size > 0 %}
+                    <span class="article-divider">•</span>
+                    <a href="{{ '/categories/#' | append: post.categories.first | slugify | relative_url }}" class="article-category">{{ post.categories.first }}</a>
+                  {% endif %}
                 </div>
-                
-                {% if post.image %}
-                <div class="post-preview-image">
-                  <a href="{{ post.url | relative_url }}">
-                    <img 
-                      src="{{ '/assets/images/' | append: post.image | relative_url }}" 
-                      alt="{{ post.title }}" 
-                      loading="{% if forloop.index <= 2 %}eager{% else %}lazy{% endif %}"
-                      width="400"
-                      height="225"
-                    />
-                  </a>
-                </div>
-                {% endif %}
+                <h3 class="article-heading">
+                  <a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+                </h3>
+                <p class="article-summary">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
+                <a href="{{ post.url | relative_url }}" class="article-readmore">Read more <span aria-hidden="true">→</span></a>
               </div>
-            </li>
+              {% if post.image %}
+              <a href="{{ post.url | relative_url }}" class="article-thumbnail">
+                <img 
+                  src="{{ '/assets/images/' | append: post.image | relative_url }}" 
+                  alt="{{ post.title }}"
+                  loading="lazy"
+                >
+              </a>
+              {% endif %}
+            </article>
             {% endunless %}
           {% endfor %}
-        </ul>
+        </div>
         
         <!-- Pagination -->
         {% if paginator.total_pages > 1 %}
-        <div class="pagination">
+        <nav class="pagination" aria-label="Pagination">
           {% if paginator.previous_page %}
-            <a href="{{ paginator.previous_page_path | relative_url }}" class="pagination-previous">&laquo; Previous</a>
+            <a href="{{ paginator.previous_page_path | relative_url }}" class="pagination-btn pagination-prev">← Prev</a>
           {% else %}
-            <span class="pagination-previous disabled">&laquo; Previous</span>
+            <span class="pagination-btn pagination-prev disabled">← Prev</span>
           {% endif %}
           
-          <div class="pagination-pages">
+          <div class="pagination-numbers">
             {% for page in (1..paginator.total_pages) %}
               {% if page == paginator.page %}
-                <span class="pagination-current">{{ page }}</span>
+                <span class="pagination-number active">{{ page }}</span>
               {% elsif page == 1 %}
-                <a href="{{ '/' | relative_url }}" class="pagination-link">{{ page }}</a>
+                <a href="{{ '/' | relative_url }}" class="pagination-number">{{ page }}</a>
               {% else %}
-                <a href="{{ site.paginate_path | relative_url | replace: ':num', page }}" class="pagination-link">{{ page }}</a>
+                <a href="{{ site.paginate_path | relative_url | replace: ':num', page }}" class="pagination-number">{{ page }}</a>
               {% endif %}
             {% endfor %}
           </div>
           
           {% if paginator.next_page %}
-            <a href="{{ paginator.next_page_path | relative_url }}" class="pagination-next">Next &raquo;</a>
+            <a href="{{ paginator.next_page_path | relative_url }}" class="pagination-btn pagination-next">Next →</a>
           {% else %}
-            <span class="pagination-next disabled">Next &raquo;</span>
+            <span class="pagination-btn pagination-next disabled">Next →</span>
           {% endif %}
-        </div>
+        </nav>
         {% endif %}
       </section>
       {% endif %}
@@ -152,41 +136,43 @@ layout: default
 
     <!-- Sidebar -->
     <aside class="sidebar">
+
       <!-- About Widget -->
       {% if site.homepage.about_widget.enabled %}
       <div class="sidebar-widget about-widget">
         <h3 class="widget-title">{{ site.homepage.about_widget.title }}</h3>
         <p>{{ site.homepage.about_widget.content }}</p>
-        <a href="{{ site.homepage.about_widget.link_url | relative_url }}" class="sidebar-link">{{ site.homepage.about_widget.link_text }}</a>
+        <a href="{{ site.homepage.about_widget.link_url | relative_url }}" class="about-link">{{ site.homepage.about_widget.link_text }}</a>
       </div>
       {% endif %}
 
       <!-- Categories Widget -->
       <div class="sidebar-widget categories-widget">
         <h3 class="widget-title">Categories</h3>
-        <ul class="category-list">
+        <div class="category-grid">
           {% assign categories = site.categories | sort %}
-          {% for category in categories %}
+          {% for category in categories limit:8 %}
             {% assign category_slug = category[0] | slugify %}
-            <li><a href="{{ '/categories/#' | append: category_slug | relative_url }}">{{ category[0] }} <span>({{ category[1].size }})</span></a></li>
+            <a href="{{ '/categories/#' | append: category_slug | relative_url }}" class="category-item">
+              <span class="category-name">{{ category[0] }}</span>
+              <span class="category-count">{{ category[1].size }}</span>
+            </a>
           {% endfor %}
-        </ul>
+        </div>
       </div>
       
       <!-- Tags Widget -->
       <div class="sidebar-widget tags-widget">
-        <h3 class="widget-title">Tags</h3>
-        <div class="sidebar-tags">
+        <h3 class="widget-title">Popular Tags</h3>
+        <div class="tag-cloud">
           {% assign tags = site.tags | sort %}
-          {% for tag in tags limit:15 %}
+          {% for tag in tags limit:12 %}
             {% assign tag_slug = tag[0] | slugify %}
-            <a href="{{ '/tags/#' | append: tag_slug | relative_url }}" class="sidebar-tag">{{ tag[0] }}</a>
+            <a href="{{ '/tags/#' | append: tag_slug | relative_url }}" class="tag-item">{{ tag[0] }}</a>
           {% endfor %}
-          {% if site.tags.size > 15 %}
-            <a href="{{ '/tags/' | relative_url }}" class="view-all-tags">View all</a>
-          {% endif %}
         </div>
       </div>
+
     </aside>
   </div>
 </div>
