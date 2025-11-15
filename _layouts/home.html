@@ -155,7 +155,6 @@ layout: default
             {% assign category_slug = category[0] | slugify %}
             <a href="{{ '/categories/#' | append: category_slug | relative_url }}" class="category-item">
               <span class="category-name">{{ category[0] }}</span>
-              <span class="category-count">{{ category[1].size }}</span>
             </a>
           {% endfor %}
         </div>
