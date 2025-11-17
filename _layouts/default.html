@@ -110,24 +110,20 @@
           storedTheme = null;
         }
         
+        let currentTheme;
         if (storedTheme === 'dark' || (!storedTheme && siteDefaultDark)) {
-          // Apply dark mode if:
-          // 1. User explicitly chose dark mode in the past OR
-          // 2. No stored preference AND site default is dark
+          currentTheme = 'dark';
+        } else {
+          currentTheme = 'light';
+        }
+        
+        // Always set data-user-theme to prevent prefers-color-scheme override
+        html.setAttribute('data-user-theme', currentTheme);
+        
+        if (currentTheme === 'dark') {
           html.classList.add('dark-mode');
-          // Only set data-user-theme if user has explicitly chosen (not default)
-          if (storedTheme) {
-            html.setAttribute('data-user-theme', 'dark');
-          }
-        } else if (storedTheme === 'light' || (!storedTheme && !siteDefaultDark)) {
-          // Apply light mode if:
-          // 1. User explicitly chose light mode in the past OR
-          // 2. No stored preference AND site default is light
+        } else {
           html.classList.remove('dark-mode');
-          // Only set data-user-theme if user has explicitly chosen (not default)
-          if (storedTheme) {
-            html.setAttribute('data-user-theme', 'light');
-          }
         }
       }
       
