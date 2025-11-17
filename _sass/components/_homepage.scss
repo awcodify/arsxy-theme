@@ -402,7 +402,8 @@
       display: grid;
       grid-template-columns: 1fr 180px;
       gap: 1.5rem;
-      padding: 1.25rem 1.25rem 1.25rem 0;
+      padding: 1.25rem;
+      margin-left: -1.25rem;
       border-radius: 12px;
       background: var(--bg-card);
       border: 1px solid var(--border-color);
@@ -410,11 +411,12 @@
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       
       &:hover {
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        border-color: rgba(99, 102, 241, 0.2);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        border-color: rgba(99, 102, 241, 0.3);
+        transform: translateY(-3px);
         
         .article-thumbnail img {
-          transform: scale(1.05);
+          transform: scale(1.02);
         }
         
         .article-heading a {
@@ -438,7 +440,7 @@
           width: 100%;
           height: 100%;
           object-fit: cover;
-          transition: transform 0.4s ease;
+          transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
       }
       
