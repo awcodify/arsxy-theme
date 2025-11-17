@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="{{ page.lang | default: site.lang | default: "en" }}" 
       {% if site.dark_mode.enabled == false %}data-dark-mode-enabled="false"{% else %}data-dark-mode-enabled="true"{% endif %}
-      {% if site.dark_mode.default %}data-dark-mode-default="true"{% else %}data-dark-mode-default="false"{% endif %}>
+      {% if site.dark_mode.default %}data-dark-mode-default="true"{% else %}data-dark-mode-default="false"{% endif %}
+      data-user-theme="light">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
