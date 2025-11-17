@@ -786,6 +786,31 @@
   .sidebar .sidebar-widget.categories-widget .category-grid {
     grid-template-columns: 1fr;
   }
+  
+  /* Mobile: Move about widget to top of page and hide other widgets */
+  .content-with-sidebar {
+    display: flex;
+    flex-direction: column;
+    
+    .main-content {
+      order: 2;
+    }
+    
+    .sidebar {
+      order: 1;
+      display: flex;
+      flex-direction: column;
+      
+      .sidebar-widget.about-widget {
+        order: -1;
+      }
+    }
+  }
+  
+  .sidebar-widget.categories-widget,
+  .sidebar-widget.tags-widget {
+    display: none;
+  }
 }
 
 @media (max-width: 480px) {
